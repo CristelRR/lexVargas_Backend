@@ -19,8 +19,8 @@ dotenv_1.default.config();
 const server = process.env.DB_SERVER || 'localhost';
 const database = process.env.DB_DATABASE || 'LEXVARGAS_BD';
 const port = Number(process.env.DB_PORT) || 1433;
-const user = process.env.DB_USER || 'LuciaRR';
-const password = process.env.DB_PASSWORD || 'passwd123';
+const user = process.env.DB_USER || 'sa';
+const password = process.env.DB_PASSWORD || 'Admin1234!';
 if (!server || !database || !user || !password) {
     throw new Error('DB_SERVER, DB_DATABASE, DB_USER y DB_PASSWORD deben estar definidos en el archivo .env');
 }

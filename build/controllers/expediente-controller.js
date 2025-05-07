@@ -111,11 +111,14 @@ class ExpedienteNController {
                     return res.status(400).json({ message: 'El número de expediente es requerido.' });
                 }
                 const partes = yield expediente_model_1.default.getPartesPorExpediente(idExpediente);
-                // Estructurar la respuesta para el frontend
+                // Verifica que partes es un arreglo antes de usar .filter
+                if (!Array.isArray(partes)) {
+                    return res.status(500).json({ message: 'Error: El resultado no es una lista de partes válida.' });
+                }
                 const response = {
-                    demandantes: partes.filter(p => p.tipo === 'Demandante'),
-                    demandados: partes.filter(p => p.tipo === 'Demandado'),
-                    terceros: partes.filter(p => p.tipo === 'Tercero')
+                    demandantes: partes.filter(p => p.tipoParte === 'Demandante'),
+                    demandados: partes.filter(p => p.tipoParte === 'Demandado'),
+                    terceros: partes.filter(p => p.tipoParte === 'Tercero')
                 };
                 res.json(response);
             }

@@ -31,6 +31,7 @@ class CitaExpedienteModel {
             throw error;
         }
     }
+    
 
 
     async getExpediente() {

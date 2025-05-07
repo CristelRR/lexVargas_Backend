@@ -14,7 +14,7 @@ class ExpedienteNRoutes {
         this.router.delete('/:id', expediente_controller_1.expedienteNController.deleteExpediente);
         this.router.get('/informacion-general/:idExpediente', expediente_controller_1.expedienteNController.informacionGeneral);
         this.router.get('/partes-expediente/:idExpediente', expediente_controller_1.expedienteNController.obtenerPartes);
-        this.router.post('/agregar-parte', expediente_controller_1.expedienteNController.agregarParte);
+        this.router.post('/agregar-parte/:idExpediente', expediente_controller_1.expedienteNController.agregarParte);
     }
 }
 const expedienteNRoutes = new ExpedienteNRoutes();

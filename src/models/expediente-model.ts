@@ -99,68 +99,71 @@ class ExpedienteNModel {
     async getPartesPorExpediente(idExpediente: number | string) {
         const pool = await connectDB();
         const id = typeof idExpediente === 'string' ? parseInt(idExpediente) : idExpediente;
-        
+      
         const result = await pool.request()
-            .input('idExpediente', id)
-            .query(`
-                SELECT 
-                    'Demandante' AS tipoParte,
-                    PD.idParteDemandante AS idParte,
-                    PD.relacionCaso,
-                    PD.nombreCompleto,
-                    PD.identificacionOficial,
-                    PD.fechaNacimiento,
-                    PD.domicilio,
-                    PD.telefono,
-                    PD.correo,
-                    PD.representanteLegalNombre,
-                    PD.numeroLicencia,
-                    PD.representanteLegalTelefono,
-                    PD.representanteLegalCorreo
-                FROM tblParteDemandante PD
-                WHERE PD.idExpedienteFK = @idExpediente
-                
-                UNION ALL
-                
-                SELECT 
-                    'Demandado' AS tipoParte,
-                    PDM.idParteDemandada AS idParte,
-                    PDM.relacionCaso,
-                    PDM.nombreCompleto,
-                    PDM.identificacionOficial,
-                    PDM.fechaNacimiento,
-                    PDM.domicilio,
-                    PDM.telefono,
-                    PDM.correo,
-                    PDM.representanteLegalNombre,
-                    PDM.representanteLegalCedula AS numeroLicencia,
-                    PDM.representanteLegalTelefono,
-                    PDM.representanteLegalCorreo
-                FROM tblParteDemandada PDM
-                WHERE PDM.idExpedienteFK = @idExpediente
-                
-                UNION ALL
-                
-                SELECT 
-                    'Tercero' AS tipoParte,
-                    TR.idTerceroRelacionado AS idParte,
-                    TR.relacionCaso,
-                    TR.nombreCompleto,
-                    TR.identificacionOficial,
-                    TR.fechaNacimiento,
-                    TR.domicilio,
-                    TR.telefono,
-                    TR.correo,
-                    NULL AS representanteLegalNombre,
-                    NULL AS numeroLicencia,
-                    NULL AS representanteLegalTelefono,
-                    NULL AS representanteLegalCorreo
-                FROM tblTercerosRelacionados TR
-                WHERE TR.idExpedienteFK = @idExpediente
-            `);
-        
-        return result.recordset;
-    }
+          .input('idExpediente', id)
+          .query(`
+            SELECT 
+                'Demandante' AS tipoParte,
+                PD.idParteDemandante AS idParte,
+                PD.relacionCaso,
+                PD.nombreCompleto,
+                PD.identificacionOficial,
+                PD.fechaNacimiento,
+                PD.domicilio,
+                PD.telefono,
+                PD.correo,
+                PD.representanteLegalNombre,
+                PD.numeroLicencia,
+                PD.representanteLegalTelefono,
+                PD.representanteLegalCorreo
+            FROM tblParteDemandante PD
+            WHERE PD.idExpedienteFK = @idExpediente
+            
+            UNION ALL
+            
+            SELECT 
+                'Demandado' AS tipoParte,
+                PDM.idParteDemandada AS idParte,
+                PDM.relacionCaso,
+                PDM.nombreCompleto,
+                PDM.identificacionOficial,
+                PDM.fechaNacimiento,
+                PDM.domicilio,
+                PDM.telefono,
+                PDM.correo,
+                PDM.representanteLegalNombre,
+                PDM.representanteLegalCedula AS numeroLicencia,
+                PDM.representanteLegalTelefono,
+                PDM.representanteLegalCorreo
+            FROM tblParteDemandada PDM
+            WHERE PDM.idExpedienteFK = @idExpediente
+            
+            UNION ALL
+            
+            SELECT 
+                'Tercero' AS tipoParte,
+                TR.idTerceroRelacionado AS idParte,
+                TR.relacionCaso,
+                TR.nombreCompleto,
+                TR.identificacionOficial,
+                TR.fechaNacimiento,
+                TR.domicilio,
+                TR.telefono,
+                TR.correo,
+                NULL AS representanteLegalNombre,
+                NULL AS numeroLicencia,
+                NULL AS representanteLegalTelefono,
+                NULL AS representanteLegalCorreo
+            FROM tblTercerosRelacionados TR
+            WHERE TR.idExpedienteFK = @idExpediente
+          `);
+      
+        const partes = result?.recordset ?? []; // Defensa contra undefined/null
+      
+        return partes; // devolvemos sin filtrar aún
+      }
+      
     
 
     async agregarParteDemandante(parteData: any) {
