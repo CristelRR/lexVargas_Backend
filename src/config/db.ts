@@ -4,11 +4,11 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const server = process.env.DB_SERVER || 'localhost';
-const database = process.env.DB_DATABASE || 'LEXVARGAS_BD';
+const server = process.env.DB_SERVER;
+const database = process.env.DB_DATABASE;
 const port = Number(process.env.DB_PORT) || 1433;
-const user = process.env.DB_USER || 'sa';
-const password = process.env.DB_PASSWORD || 'Admin1234!';
+const user = process.env.DB_USER ;
+const password = process.env.DB_PASSWORD;
 
 if (!server || !database || !user || !password) {
     throw new Error('DB_SERVER, DB_DATABASE, DB_USER y DB_PASSWORD deben estar definidos en el archivo .env');
