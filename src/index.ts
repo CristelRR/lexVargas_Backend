@@ -20,6 +20,8 @@ import cargarDocumentosRoute from './routes/cargarDocumentos-route';
 import citasExpedientesRoutes from './routes/citas-expedientes-routes';
 import './jobs/temporalidadJob';
 //import './jobs/actualizacion-citas';
+import { ipAttackGuard } from './middlewares/ip-guard.middleware';
+
 
 class Server {
     public app: Application;

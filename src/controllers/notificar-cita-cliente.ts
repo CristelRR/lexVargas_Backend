@@ -1,4 +1,5 @@
 import { enviarCorreo } from '../config/mailer';
+import logger from "../logger/logger";
 
 export const notificarClienteCita = async (
   clienteEmail: string,

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { connectDB } from "../config/db";
+import logger from "../logger/logger";
 
 
 class CargarDocumentosController {

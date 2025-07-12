@@ -1,4 +1,6 @@
 import { connectDB } from "../config/db";
+import logger from "../logger/logger";
+
 
 class CitaModel {
     async getCitas() {

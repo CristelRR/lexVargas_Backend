@@ -3,8 +3,7 @@ import citaModel from "../models/cita-model";
 import { notificarClienteCita } from "./notificar-cita-cliente";
 import { enviarCorreo } from "../config/mailer"; 
 import moment from 'moment';
-
-
+import logger from "../logger/logger";
 
 class CitaController {
     async getCitas(req: Request, res: Response) {

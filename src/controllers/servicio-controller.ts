@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import servicioModel from "../models/servicio-model";
+import logger from "../logger/logger";
 
 class ServicioController {
     async getServicios(req: Request, res: Response) {

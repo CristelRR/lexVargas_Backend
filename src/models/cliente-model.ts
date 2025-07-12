@@ -1,4 +1,5 @@
 import { connectDB } from "../config/db";
+import logger from "../logger/logger";
 
 class ClienteModel {
     async getClientes() {

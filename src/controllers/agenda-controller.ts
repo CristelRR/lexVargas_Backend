@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import agendaModel from "../models/agenda-model";
+import logger from "../logger/logger";
 
 class AgendaController {
     async getAgendas(req: Request, res: Response) {

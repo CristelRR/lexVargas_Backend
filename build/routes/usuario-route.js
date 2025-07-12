@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const usuario_controller_1 = require("../controllers/usuario-controller");
 const auth_middleware_1 = require("../middlewares/auth.middleware");
+const ip_guard_middleware_1 = require("../middlewares/ip-guard.middleware");
 class UsuarioRoutes {
     constructor() {
         this.router = (0, express_1.Router)();
@@ -10,7 +11,7 @@ class UsuarioRoutes {
     }
     config() {
         // RUTAS PÚBLICAS
-        this.router.post('/login', usuario_controller_1.usuarioController.login);
+        this.router.post('/login', ip_guard_middleware_1.ipAttackGuard, usuario_controller_1.usuarioController.login);
         this.router.post('/verify-otp', usuario_controller_1.usuarioController.verificarOTP);
         this.router.post('/recuperar-contrasena', usuario_controller_1.usuarioController.enviarCorreoRecuperacion);
         this.router.post('/restablecer-contrasena', usuario_controller_1.usuarioController.restablecerContrasena);

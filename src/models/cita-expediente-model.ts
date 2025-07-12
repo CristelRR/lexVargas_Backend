@@ -1,5 +1,6 @@
 import { connectDB } from "../config/db";
 import { Request, Response } from "express";
+import logger from "../logger/logger";
 
 class CitaExpedienteModel {
     async getCitasExpediente(idExpediente: number) {

@@ -53,6 +53,8 @@ const mailer_1 = require("../config/mailer");
 const db_1 = require("../config/db");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const logger_1 = __importDefault(require("../logger/logger"));
+const ip_guard_middleware_1 = require("../middlewares/ip-guard.middleware");
 class UsuarioController {
     getUsuarios(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -61,39 +63,43 @@ class UsuarioController {
                 res.json(usuarios);
             }
             catch (error) {
-                console.error("Error al obtener usuarios:", error);
+                logger_1.default.error("Error al obtener usuarios: " + error);
                 res.status(500).json({ message: "Error al obtener usuarios" });
             }
         });
     }
     login(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c;
+            const ip = (_c = (_a = req.ip) !== null && _a !== void 0 ? _a : (_b = req.socket) === null || _b === void 0 ? void 0 : _b.remoteAddress) !== null && _c !== void 0 ? _c : "unknown";
             try {
                 const { email, password, recaptcha } = req.body;
                 const usuario = yield usuario_model_1.default.findByEmail(email);
                 if (!usuario) {
+                    (0, ip_guard_middleware_1.registerFailedAttempt)(ip);
                     return res.status(401).json({ message: "Credenciales incorrectas" });
                 }
                 const passwordValido = yield bcryptjs_1.default.compare(password, usuario.pass);
                 if (!passwordValido) {
+                    (0, ip_guard_middleware_1.registerFailedAttempt)(ip);
                     return res.status(401).json({ message: "Credenciales incorrectas" });
                 }
                 const secretKey = "6LemDAArAAAAANKFrntBm5gGMtjLGGB9X23Ml-RC";
                 const recaptchaResponse = yield axios_1.default.post("https://www.google.com/recaptcha/api/siteverify", null, { params: { secret: secretKey, response: recaptcha } });
                 if (!recaptchaResponse.data.success) {
+                    (0, ip_guard_middleware_1.registerFailedAttempt)(ip);
                     return res.status(400).json({ message: "reCAPTCHA inválido" });
                 }
+                (0, ip_guard_middleware_1.clearFailedAttempts)(ip);
                 const otp = crypto.randomInt(100000, 999999).toString();
                 const otpExpiration = Date.now() + 5 * 60 * 1000;
                 yield usuario_model_1.default.updateOTP(usuario.idUsuario, otp, otpExpiration);
                 yield (0, mailer_1.enviarCorreo)(usuario.nombreUsuario, "Código de verificación OTP", `<p>Tu código de verificación es: <strong>${otp}</strong></p>`);
-                return res.json({
-                    message: "OTP enviado",
-                    email: usuario.nombreUsuario,
-                });
+                logger_1.default.info(`OTP enviado a ${usuario.nombreUsuario}`);
+                return res.json({ message: "OTP enviado", email: usuario.nombreUsuario });
             }
             catch (error) {
-                console.error("Error en el login:", error);
+                logger_1.default.error("Error en el login: " + error);
                 res.status(500).json({ message: "Error al iniciar sesión" });
             }
         });
@@ -141,7 +147,7 @@ class UsuarioController {
                 });
             }
             catch (error) {
-                console.error("Error al verificar OTP:", error);
+                logger_1.default.error("Error al verificar OTP: " + error);
                 res.status(500).json({ message: "Error al verificar OTP" });
             }
         });
@@ -156,7 +162,7 @@ class UsuarioController {
                 res.status(201).json({ message: "Usuario creado exitosamente" });
             }
             catch (error) {
-                console.error("Error al crear usuario:", error);
+                logger_1.default.error("Error al crear usuario: " + error);
                 res.status(500).json({ message: "Error al crear usuario" });
             }
         });
@@ -169,7 +175,7 @@ class UsuarioController {
                 res.json({ message: "Usuario actualizado exitosamente" });
             }
             catch (error) {
-                console.error("Error al actualizar usuario:", error);
+                logger_1.default.error("Error al actualizar usuario: " + error);
                 res.status(500).json({ message: "Error al actualizar usuario" });
             }
         });
@@ -182,7 +188,7 @@ class UsuarioController {
                 res.json({ message: "Usuario eliminado exitosamente" });
             }
             catch (error) {
-                console.error("Error al eliminar usuario:", error);
+                logger_1.default.error("Error al eliminar usuario: " + error);
                 res.status(500).json({ message: "Error al eliminar usuario" });
             }
         });
@@ -205,7 +211,7 @@ class UsuarioController {
                 res.json({ message: "Correo enviado correctamente" });
             }
             catch (error) {
-                console.error("Error al enviar correo de recuperación:", error);
+                logger_1.default.error("Error al enviar correo de recuperación: " + error);
                 res.status(500).json({ message: "Error interno" });
             }
         });
@@ -234,7 +240,7 @@ class UsuarioController {
                 res.json({ message: "Contraseña restablecida correctamente" });
             }
             catch (error) {
-                console.error("Error al restablecer contraseña:", error);
+                logger_1.default.error("Error al restablecer contraseña: " + error);
                 res.status(500).json({ message: "Error interno al restablecer contraseña" });
             }
         });
@@ -249,7 +255,6 @@ class UsuarioController {
                 }
                 const decoded = jsonwebtoken_1.default.verify(token, 'CLAVE_SECRETA_SUPERSEGURA');
                 if (typeof decoded === 'object' && decoded !== null && 'id' in decoded) {
-                    const nuevaExpiracion = Date.now() + 30 * 60 * 1000;
                     const newToken = jsonwebtoken_1.default.sign({
                         id: decoded.id,
                         rol: decoded.rol,
@@ -266,7 +271,7 @@ class UsuarioController {
                 }
             }
             catch (error) {
-                console.error('Error al extender la sesión:', error);
+                logger_1.default.error('Error al extender la sesión: ' + error);
                 res.status(500).json({ message: 'Error al extender la sesión' });
             }
         });

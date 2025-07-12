@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import expedienteNModel from "../models/expediente-model";
-
-
+import logger from "../logger/logger";
 
 
 class ExpedienteNController {

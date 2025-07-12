@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import empleadoModel from "../models/empleado-model";
+import logger from "../logger/logger";
 
 class EmpleadoController {
     async getEmpleados(req: Request, res: Response) {

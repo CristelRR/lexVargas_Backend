@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import clienteModel from "../models/cliente-model"; // Asegúrate de tener el modelo correspondiente
+import logger from "../logger/logger";
+
 
 class ClienteController {
     async getClientes(req: Request, res: Response) {

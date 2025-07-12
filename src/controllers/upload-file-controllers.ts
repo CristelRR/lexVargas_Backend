@@ -4,7 +4,7 @@ const { PDFDocument } = require('pdf-lib'); // Librería para manipular PDFs
 const sql = require('mssql'); // Librería para conectarse a SQL Server
 import fs from "fs";
 import path from "path";
-
+import logger from "../logger/logger";
 
 const uploadDir = path.join(__dirname, '../uploads');
 if (!fs.existsSync(uploadDir)) {

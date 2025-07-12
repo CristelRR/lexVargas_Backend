@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import notaModel from "../models/nota-modal";
+import logger from "../logger/logger";
 
 class NotaController {
     /**

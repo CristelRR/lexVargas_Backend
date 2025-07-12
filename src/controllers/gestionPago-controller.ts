@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { connectDB } from '../config/db'; // Importa la conexión a la base de datos
 import { Pago } from '../models/gestionPago-model';
+import logger from "../logger/logger";
 
 export class PagoController {
 

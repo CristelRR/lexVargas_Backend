@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import citaExpedienteModel from "../models/cita-expediente-model";
+import logger from "../logger/logger";
+
 
 class CitaExpedienteController {
     async getCitasExpediente(req: Request, res: Response): Promise<Response> {

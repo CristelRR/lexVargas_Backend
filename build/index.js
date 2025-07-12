@@ -33,7 +33,6 @@ const nota_route_1 = __importDefault(require("./routes/nota-route"));
 const cargarDocumentos_route_1 = __importDefault(require("./routes/cargarDocumentos-route"));
 const citas_expedientes_routes_1 = __importDefault(require("./routes/citas-expedientes-routes"));
 require("./jobs/temporalidadJob");
-//import './jobs/actualizacion-citas';
 class Server {
     constructor() {
         this.app = (0, express_1.default)();

@@ -4,33 +4,36 @@ import axios from "axios";
 import * as crypto from "crypto";
 import { enviarCorreo } from "../config/mailer";
 import { connectDB } from "../config/db";
-import jwt from "jsonwebtoken";
-import { JwtPayload } from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
+import jwt, { JwtPayload } from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import logger from "../logger/logger";
+import { registerFailedAttempt, clearFailedAttempts } from "../middlewares/ip-guard.middleware";
 
 class UsuarioController {
-
   async getUsuarios(req: Request, res: Response) {
     try {
       const usuarios = await usuarioModel.getUsuarios();
       res.json(usuarios);
     } catch (error) {
-      console.error("Error al obtener usuarios:", error);
+      logger.error("Error al obtener usuarios: " + error);
       res.status(500).json({ message: "Error al obtener usuarios" });
     }
   }
 
   async login(req: Request, res: Response) {
+    const ip = req.ip ?? req.socket?.remoteAddress ?? "unknown";
     try {
       const { email, password, recaptcha } = req.body;
 
       const usuario = await usuarioModel.findByEmail(email);
       if (!usuario) {
+        registerFailedAttempt(ip);
         return res.status(401).json({ message: "Credenciales incorrectas" });
       }
 
       const passwordValido = await bcrypt.compare(password, usuario.pass);
       if (!passwordValido) {
+        registerFailedAttempt(ip);
         return res.status(401).json({ message: "Credenciales incorrectas" });
       }
 
@@ -42,8 +45,11 @@ class UsuarioController {
       );
 
       if (!recaptchaResponse.data.success) {
+        registerFailedAttempt(ip);
         return res.status(400).json({ message: "reCAPTCHA inválido" });
       }
+
+      clearFailedAttempts(ip);
 
       const otp = crypto.randomInt(100000, 999999).toString();
       const otpExpiration = Date.now() + 5 * 60 * 1000;
@@ -56,12 +62,11 @@ class UsuarioController {
         `<p>Tu código de verificación es: <strong>${otp}</strong></p>`
       );
 
-      return res.json({
-        message: "OTP enviado",
-        email: usuario.nombreUsuario,
-      });
+      logger.info(`OTP enviado a ${usuario.nombreUsuario}`);
+      return res.json({ message: "OTP enviado", email: usuario.nombreUsuario });
+
     } catch (error) {
-      console.error("Error en el login:", error);
+      logger.error("Error en el login: " + error);
       res.status(500).json({ message: "Error al iniciar sesión" });
     }
   }
@@ -79,9 +84,7 @@ class UsuarioController {
       const result = await pool
         .request()
         .input("idUsuarioFK", usuario.idUsuario)
-        .query(
-          "SELECT otp, otpExpiration FROM tblUsuarioOTP WHERE idUsuarioFK = @idUsuarioFK"
-        );
+        .query("SELECT otp, otpExpiration FROM tblUsuarioOTP WHERE idUsuarioFK = @idUsuarioFK");
 
       if (result.recordset.length === 0) {
         return res.status(400).json({ message: "OTP no encontrado" });
@@ -122,7 +125,7 @@ class UsuarioController {
         },
       });
     } catch (error) {
-      console.error("Error al verificar OTP:", error);
+      logger.error("Error al verificar OTP: " + error);
       res.status(500).json({ message: "Error al verificar OTP" });
     }
   }
@@ -135,7 +138,7 @@ class UsuarioController {
       await usuarioModel.crearUsuario(usuarioData);
       res.status(201).json({ message: "Usuario creado exitosamente" });
     } catch (error) {
-      console.error("Error al crear usuario:", error);
+      logger.error("Error al crear usuario: " + error);
       res.status(500).json({ message: "Error al crear usuario" });
     }
   }
@@ -146,7 +149,7 @@ class UsuarioController {
       await usuarioModel.updateUsuario(usuarioData);
       res.json({ message: "Usuario actualizado exitosamente" });
     } catch (error) {
-      console.error("Error al actualizar usuario:", error);
+      logger.error("Error al actualizar usuario: " + error);
       res.status(500).json({ message: "Error al actualizar usuario" });
     }
   }
@@ -157,7 +160,7 @@ class UsuarioController {
       await usuarioModel.deleteUsuario(idUsuario);
       res.json({ message: "Usuario eliminado exitosamente" });
     } catch (error) {
-      console.error("Error al eliminar usuario:", error);
+      logger.error("Error al eliminar usuario: " + error);
       res.status(500).json({ message: "Error al eliminar usuario" });
     }
   }
@@ -187,7 +190,7 @@ class UsuarioController {
 
       res.json({ message: "Correo enviado correctamente" });
     } catch (error) {
-      console.error("Error al enviar correo de recuperación:", error);
+      logger.error("Error al enviar correo de recuperación: " + error);
       res.status(500).json({ message: "Error interno" });
     }
   }
@@ -223,7 +226,7 @@ class UsuarioController {
 
       res.json({ message: "Contraseña restablecida correctamente" });
     } catch (error) {
-      console.error("Error al restablecer contraseña:", error);
+      logger.error("Error al restablecer contraseña: " + error);
       res.status(500).json({ message: "Error interno al restablecer contraseña" });
     }
   }
@@ -238,7 +241,6 @@ class UsuarioController {
       const decoded = jwt.verify(token, 'CLAVE_SECRETA_SUPERSEGURA');
 
       if (typeof decoded === 'object' && decoded !== null && 'id' in decoded) {
-        const nuevaExpiracion = Date.now() + 30 * 60 * 1000;
         const newToken = jwt.sign(
           {
             id: (decoded as JwtPayload).id,
@@ -258,24 +260,22 @@ class UsuarioController {
         return res.status(400).json({ message: "Token no válido o mal formado" });
       }
     } catch (error) {
-      console.error('Error al extender la sesión:', error);
+      logger.error('Error al extender la sesión: ' + error);
       res.status(500).json({ message: 'Error al extender la sesión' });
     }
   }
 
   async cifrarPasswordManual() {
-  const email = "cristel23rr@gmail.com";
-  const nueva = "Passwd1234";
+    const email = "cristel23rr@gmail.com";
+    const nueva = "Passwd1234";
 
-  const hashed = await bcrypt.hash(nueva, 10);
-  const pool = await connectDB();
-  await pool.request()
-    .input("pass", hashed)
-    .input("email", email)
-    .query("UPDATE tblUsuario SET pass = @pass WHERE nombreUsuario = @email");
-
-}
-
+    const hashed = await bcrypt.hash(nueva, 10);
+    const pool = await connectDB();
+    await pool.request()
+      .input("pass", hashed)
+      .input("email", email)
+      .query("UPDATE tblUsuario SET pass = @pass WHERE nombreUsuario = @email");
+  }
 }
 
 export const usuarioController = new UsuarioController();

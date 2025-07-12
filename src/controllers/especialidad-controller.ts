@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import especialidadModel from "../models/especialidad-model";
+import logger from "../logger/logger";
 
 class EspecialidadController {
     async getEspecialidades(req: Request, res: Response) {

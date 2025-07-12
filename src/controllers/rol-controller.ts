@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import rolModel from "../models/rol-model";
+import logger from "../logger/logger";
 
 class RolController {
     async getRoles(req: Request, res: Response) {
