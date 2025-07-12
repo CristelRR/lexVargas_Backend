@@ -32,6 +32,8 @@ const expediente_route_1 = __importDefault(require("./routes/expediente-route"))
 const nota_route_1 = __importDefault(require("./routes/nota-route"));
 const cargarDocumentos_route_1 = __importDefault(require("./routes/cargarDocumentos-route"));
 const citas_expedientes_routes_1 = __importDefault(require("./routes/citas-expedientes-routes"));
+require("./jobs/temporalidadJob");
+//import './jobs/actualizacion-citas';
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -50,7 +52,6 @@ class Server {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 yield (0, db_1.connectDB)();
-                console.log('Conexión a la base de datos establecida con éxito');
             }
             catch (error) {
                 console.error('Error al conectar a la base de datos:', error.message);
@@ -81,7 +82,6 @@ class Server {
     }
     start() {
         this.app.listen(this.app.get('port'), () => {
-            console.log('Servidor corriendo en el puerto', this.app.get('port'));
         });
     }
 }

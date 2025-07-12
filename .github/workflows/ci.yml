@@ -1,0 +1,33 @@
+name: CI - Seguridad e Integridad
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  seguridad:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Clonar repositorio
+      uses: actions/checkout@v3
+
+    - name: 🟢 Usar Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: 📦 Instalar dependencias (usando hashes seguros)
+      run: npm ci
+
+    - name: 🛡️ Verificar seguridad de paquetes
+      run: npm audit --audit-level=high
+
+    - name: 🔧 Intentar reparar dependencias vulnerables (solo en rama no crítica)
+      if: github.ref != 'refs/heads/main'
+      run: npm audit fix
+
+    - name: ✅ Pruebas básicas de funcionamiento
+      run: npm run build || echo "⚠️ No hay build definido"

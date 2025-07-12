@@ -147,23 +147,19 @@ class CitaController {
                 const result = yield cita_model_1.default.cancelarCita(Number(idCita));
                 // Obtener los datos de la cita y del cliente
                 const cita = yield cita_model_1.default.findById(idCita);
-                console.log("Datos de la cita obtenidos:", cita); // Registro para verificar los datos de la cita
                 if (cita.length > 0) {
                     const cliente = yield cita_model_1.default.obtenerDatosCliente(cita[0].idClienteFK);
-                    console.log("Datos del cliente obtenidos:", cliente); // Registro para verificar los datos del cliente
                     if (cliente && cliente.emailCliente) {
                         const { emailCliente, nombreCliente, aPCliente, aMCliente } = cliente;
                         const clienteNombre = `${nombreCliente} ${aPCliente} ${aMCliente}`;
                         const motivoCita = cita[0].motivo;
                         const fechaCitaRaw = cita[0].fechaCita;
-                        console.log("Fecha de la cita cruda:", fechaCitaRaw); // Registro para verificar la fecha sin procesar
                         if (fechaCitaRaw) {
                             // Utilizando moment para formatear la fecha
                             const fechaCitaObj = (0, moment_1.default)(fechaCitaRaw);
                             if (fechaCitaObj.isValid()) {
                                 const fecha = fechaCitaObj.format('DD-MM-YYYY');
                                 const hora = fechaCitaObj.format('HH:mm');
-                                console.log("Fecha formateada:", fecha, "Hora formateada:", hora); // Registro para verificar la fecha y hora procesadas
                                 // Construir el contenido del correo con la nueva estructura
                                 const asunto = 'Cancelación de Cita';
                                 const contenido = `
@@ -179,7 +175,6 @@ class CitaController {
                             `;
                                 // Enviar correo de notificación
                                 yield (0, mailer_1.enviarCorreo)(emailCliente, asunto, contenido);
-                                console.log("Correo enviado exitosamente a:", emailCliente); // Registro para confirmar que el correo se ha enviado
                             }
                             else {
                                 console.error('Error: La fecha de la cita no es válida.');
@@ -255,7 +250,6 @@ class CitaController {
                 // Llama al modelo para obtener todas las citas (en el caso de secretaría)
                 const citas = yield cita_model_1.default.getAllCitas(); // Asegúrate de que el método esté implementado en el modelo
                 res.json(citas); // Devuelve las citas como respuesta
-                console.log(citas);
             }
             catch (error) {
                 console.error('Error al obtener las citas:', error);

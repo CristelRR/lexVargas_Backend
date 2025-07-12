@@ -138,11 +138,9 @@ class CitaController {
 
             // Obtener los datos de la cita y del cliente
             const cita = await citaModel.findById(idCita);
-            console.log("Datos de la cita obtenidos:", cita); // Registro para verificar los datos de la cita
 
             if (cita.length > 0) {
                 const cliente = await citaModel.obtenerDatosCliente(cita[0].idClienteFK);
-                console.log("Datos del cliente obtenidos:", cliente); // Registro para verificar los datos del cliente
 
                 if (cliente && cliente.emailCliente) {
                     const { emailCliente, nombreCliente, aPCliente, aMCliente } = cliente;
@@ -150,7 +148,6 @@ class CitaController {
                     const motivoCita = cita[0].motivo;
                     const fechaCitaRaw = cita[0].fechaCita;
 
-                    console.log("Fecha de la cita cruda:", fechaCitaRaw); // Registro para verificar la fecha sin procesar
 
                     if (fechaCitaRaw) {
                         // Utilizando moment para formatear la fecha
@@ -159,7 +156,6 @@ class CitaController {
                             const fecha = fechaCitaObj.format('DD-MM-YYYY');
                             const hora = fechaCitaObj.format('HH:mm');
 
-                            console.log("Fecha formateada:", fecha, "Hora formateada:", hora); // Registro para verificar la fecha y hora procesadas
 
                             // Construir el contenido del correo con la nueva estructura
                             const asunto = 'Cancelación de Cita';
@@ -177,7 +173,6 @@ class CitaController {
 
                             // Enviar correo de notificación
                             await enviarCorreo(emailCliente, asunto, contenido);
-                            console.log("Correo enviado exitosamente a:", emailCliente); // Registro para confirmar que el correo se ha enviado
                         } else {
                             console.error('Error: La fecha de la cita no es válida.');
                         }
@@ -246,7 +241,6 @@ class CitaController {
             // Llama al modelo para obtener todas las citas (en el caso de secretaría)
             const citas = await citaModel.getAllCitas();  // Asegúrate de que el método esté implementado en el modelo
             res.json(citas);  // Devuelve las citas como respuesta
-            console.log(citas);
         } catch (error) {
             console.error('Error al obtener las citas:', error);
             res.status(500).json({ message: 'Error al obtener las citas' });

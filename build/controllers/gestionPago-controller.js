@@ -62,8 +62,6 @@ class PagoController {
                         where cs.folio = @folio ;
                 `);
                 res.status(200).json(result.recordset);
-                console.log("Se muestran los datos back");
-                console.log(folio);
             }
             catch (e) {
                 console.error('Error al obtener los pagos:', e);
@@ -74,7 +72,6 @@ class PagoController {
     // Método para crear un nuevo pago
     crearPago(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(req.body);
             try {
                 const nuevoPago = new gestionPago_model_1.Pago();
                 nuevoPago.monto = req.body.monto;

@@ -6,7 +6,7 @@ import { enviarCorreo } from "../config/mailer";
 import { connectDB } from "../config/db";
 import jwt from "jsonwebtoken";
 import { JwtPayload } from 'jsonwebtoken';
-
+import bcrypt from 'bcryptjs';
 
 class UsuarioController {
 
@@ -22,19 +22,18 @@ class UsuarioController {
 
   async login(req: Request, res: Response) {
     try {
-      console.log("Solicitud de login recibida", req.body);
-
       const { email, password, recaptcha } = req.body;
 
-      // Buscar usuario en la BD
       const usuario = await usuarioModel.findByEmail(email);
-
-      if (!usuario || usuario.pass !== password) {
-        console.log("Credenciales incorrectas");
+      if (!usuario) {
         return res.status(401).json({ message: "Credenciales incorrectas" });
       }
 
-      // Verificar reCAPTCHA
+      const passwordValido = await bcrypt.compare(password, usuario.pass);
+      if (!passwordValido) {
+        return res.status(401).json({ message: "Credenciales incorrectas" });
+      }
+
       const secretKey = "6LemDAArAAAAANKFrntBm5gGMtjLGGB9X23Ml-RC";
       const recaptchaResponse = await axios.post(
         "https://www.google.com/recaptcha/api/siteverify",
@@ -46,24 +45,20 @@ class UsuarioController {
         return res.status(400).json({ message: "reCAPTCHA inválido" });
       }
 
-      // Siempre generar un OTP (ya no es opcional)
       const otp = crypto.randomInt(100000, 999999).toString();
-      const otpExpiration = Date.now() + 5 * 60 * 1000; // Expira en 5 minutos
+      const otpExpiration = Date.now() + 5 * 60 * 1000;
 
-      // Guardamos OTP en la base de datos
       await usuarioModel.updateOTP(usuario.idUsuario, otp, otpExpiration);
 
-      // Enviar OTP al correo del usuario
-      console.log("Enviando correo de OTP a:", usuario.nombreUsuario);
       await enviarCorreo(
-        usuario.nombreUsuario, // Correo del usuario
+        usuario.nombreUsuario,
         "Código de verificación OTP",
         `<p>Tu código de verificación es: <strong>${otp}</strong></p>`
       );
 
       return res.json({
         message: "OTP enviado",
-        email: usuario.nombreUsuario, // Enviar email al frontend
+        email: usuario.nombreUsuario,
       });
     } catch (error) {
       console.error("Error en el login:", error);
@@ -75,13 +70,11 @@ class UsuarioController {
     try {
       const { email, otp } = req.body;
 
-      // Buscar usuario por email
       const usuario = await usuarioModel.findByEmail(email);
       if (!usuario) {
         return res.status(400).json({ message: "Usuario no encontrado" });
       }
 
-      // Buscar OTP en la BD
       const pool = await connectDB();
       const result = await pool
         .request()
@@ -96,7 +89,6 @@ class UsuarioController {
 
       const usuarioOTP = result.recordset[0];
 
-      // Verificar si el OTP es válido
       if (usuarioOTP.otp !== otp) {
         return res.status(400).json({ message: "Código OTP incorrecto" });
       }
@@ -105,10 +97,8 @@ class UsuarioController {
         return res.status(400).json({ message: "Código OTP expirado" });
       }
 
-      // Limpiar OTP de la BD (opcional)
       await usuarioModel.deleteOTP(usuario.idUsuario);
 
-      // Se genera el token con expiracion
       const token = jwt.sign(
         {
           id: usuario.idUsuario,
@@ -117,12 +107,9 @@ class UsuarioController {
           idCliente: usuario.idClienteFK,
         },
         "CLAVE_SECRETA_SUPERSEGURA",
-        //{ expiresIn: "30m" } // Token expira en 30 minutos
-        { expiresIn: "30m" } //Expiracion de prueba
-
+        { expiresIn: "30m" }
       );
 
-      // Enviar respuesta con datos del usuario
       res.json({
         message: "OTP verificado correctamente",
         token,
@@ -142,7 +129,9 @@ class UsuarioController {
 
   async crearUsuario(req: Request, res: Response) {
     try {
-      const usuarioData = req.body; // Asegúrate de validar los datos aquí
+      const usuarioData = req.body;
+      const hashedPassword = await bcrypt.hash(usuarioData.pass, 10);
+      usuarioData.pass = hashedPassword;
       await usuarioModel.crearUsuario(usuarioData);
       res.status(201).json({ message: "Usuario creado exitosamente" });
     } catch (error) {
@@ -153,7 +142,7 @@ class UsuarioController {
 
   async updateUsuario(req: Request, res: Response) {
     try {
-      const usuarioData = req.body; // Asegúrate de validar los datos aquí
+      const usuarioData = req.body;
       await usuarioModel.updateUsuario(usuarioData);
       res.json({ message: "Usuario actualizado exitosamente" });
     } catch (error) {
@@ -164,7 +153,7 @@ class UsuarioController {
 
   async deleteUsuario(req: Request, res: Response) {
     try {
-      const { idUsuario } = req.body; // Asegúrate de validar el ID aquí
+      const { idUsuario } = req.body;
       await usuarioModel.deleteUsuario(idUsuario);
       res.json({ message: "Usuario eliminado exitosamente" });
     } catch (error) {
@@ -183,18 +172,17 @@ class UsuarioController {
       }
 
       const token = crypto.randomBytes(32).toString("hex");
-      const expiration = Date.now() + 15 * 60 * 1000; // 15 minutos
-  
+      const expiration = Date.now() + 15 * 60 * 1000;
+
       await usuarioModel.guardarTokenRecuperacion(usuario.idUsuario, token, expiration);
-  
+
       const link = `https://lexvargas-bufet.web.app/restablecer-contrasena/${token}`;
-// El enlace se envía con el token
-await enviarCorreo(
-  email,
-  "Recuperación de Contraseña",
-  `<p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
-   <a href="${link}">${link}</a>
-   <p>Este enlace expirará en 15 minutos.</p>`
+      await enviarCorreo(
+        email,
+        "Recuperación de Contraseña",
+        `<p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
+         <a href="${link}">${link}</a>
+         <p>Este enlace expirará en 15 minutos.</p>`
       );
 
       res.json({ message: "Correo enviado correctamente" });
@@ -217,18 +205,13 @@ await enviarCorreo(
         return res.status(400).json({ message: "Token expirado" });
       }
 
-      // Actualizar contraseña
-      await usuarioModel.actualizarContrasena(
-        registro.idUsuarioFK,
-        nuevaContrasena
-      );
+      const hashedPassword = await bcrypt.hash(nuevaContrasena, 10);
+      await usuarioModel.actualizarContrasena(registro.idUsuarioFK, hashedPassword);
       await usuarioModel.eliminarToken(registro.idUsuarioFK);
 
-      // 📧 Obtener el correo del usuario
       const usuario = await usuarioModel.findById(registro.idUsuarioFK);
       const correoUsuario = usuario[0]?.nombreUsuario;
 
-      // ✅ Enviar correo de confirmación
       if (correoUsuario) {
         await enviarCorreo(
           correoUsuario,
@@ -241,9 +224,7 @@ await enviarCorreo(
       res.json({ message: "Contraseña restablecida correctamente" });
     } catch (error) {
       console.error("Error al restablecer contraseña:", error);
-      res
-        .status(500)
-        .json({ message: "Error interno al restablecer contraseña" });
+      res.status(500).json({ message: "Error interno al restablecer contraseña" });
     }
   }
 
@@ -253,24 +234,22 @@ await enviarCorreo(
       if (!token) {
         return res.status(400).json({ message: "Token no proporcionado" });
       }
-  
+
       const decoded = jwt.verify(token, 'CLAVE_SECRETA_SUPERSEGURA');
-  
-      // Verificar que decoded es del tipo JwtPayload
+
       if (typeof decoded === 'object' && decoded !== null && 'id' in decoded) {
-        // Ahora podemos acceder a las propiedades de JwtPayload sin error
-        const nuevaExpiracion = Date.now() + 30 * 60 * 1000; // Añadir 30 minutos
+        const nuevaExpiracion = Date.now() + 30 * 60 * 1000;
         const newToken = jwt.sign(
           {
-            id: (decoded as JwtPayload).id,  // Asegúrate de hacer el cast a JwtPayload
+            id: (decoded as JwtPayload).id,
             rol: (decoded as JwtPayload).rol,
             idEmpleado: (decoded as JwtPayload).idEmpleado,
             idCliente: (decoded as JwtPayload).idCliente,
           },
           'CLAVE_SECRETA_SUPERSEGURA',
-          { expiresIn: '30m' } // Expiración extendida de 30 minutos
+          { expiresIn: '30m' }
         );
-  
+
         res.json({
           message: 'Sesión extendida',
           token: newToken,
@@ -281,9 +260,22 @@ await enviarCorreo(
     } catch (error) {
       console.error('Error al extender la sesión:', error);
       res.status(500).json({ message: 'Error al extender la sesión' });
-    } 
-
+    }
   }
+
+  async cifrarPasswordManual() {
+  const email = "cristel23rr@gmail.com";
+  const nueva = "Passwd1234";
+
+  const hashed = await bcrypt.hash(nueva, 10);
+  const pool = await connectDB();
+  await pool.request()
+    .input("pass", hashed)
+    .input("email", email)
+    .query("UPDATE tblUsuario SET pass = @pass WHERE nombreUsuario = @email");
+
+}
+
 }
 
 export const usuarioController = new UsuarioController();

@@ -74,9 +74,6 @@ class UsuarioModel {
       const pool = await connectDB();
 
       // 🔍 Agregar log para ver si la función se ejecuta correctamente
-      console.log(
-        `Actualizando OTP para usuario ID: ${idUsuarioFK}, OTP: ${otp}, Expiración: ${otpExpiration}`
-      );
 
       const result = await pool
         .request()
@@ -96,7 +93,6 @@ class UsuarioModel {
                     END
                 `);
 
-      console.log("Resultado de la actualización/insert:", result);
     } catch (error) {
       console.error("Error al insertar OTP en la base de datos:", error);
     }
@@ -110,7 +106,6 @@ class UsuarioModel {
         .input("idUsuarioFK", idUsuarioFK)
         .query("DELETE FROM tblUsuarioOTP WHERE idUsuarioFK = @idUsuarioFK");
 
-      console.log("OTP eliminado después de la verificación");
     } catch (error) {
       console.error("Error al eliminar OTP:", error);
     }

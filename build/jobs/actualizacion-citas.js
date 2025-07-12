@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_cron_1 = __importDefault(require("node-cron"));
 const db_1 = require("../config/db");
-const moment_1 = __importDefault(require("moment"));
 function marcarCitasCompletadas() {
     return __awaiter(this, void 0, void 0, function* () {
         const pool = yield (0, db_1.connectDB)();
@@ -28,7 +27,6 @@ function marcarCitasCompletadas() {
                   (fechaCita = CAST(GETDATE() AS DATE) AND horaCita <= CAST(GETDATE() AS TIME))
               )
         `);
-            console.log(`Citas completadas automáticamente: ${result.rowsAffected}`);
         }
         catch (error) {
             console.error("Error al marcar citas como completadas:", error);
@@ -37,6 +35,5 @@ function marcarCitasCompletadas() {
 }
 // Programa la tarea para ejecutarse cada hora
 node_cron_1.default.schedule('0 * * * *', () => {
-    console.log(`[${(0, moment_1.default)().format('YYYY-MM-DD HH:mm:ss')}] Ejecutando tarea para actualizar citas completadas...`);
     marcarCitasCompletadas();
 });

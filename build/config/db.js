@@ -38,7 +38,6 @@ const dbConfig = {
 const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const pool = yield mssql_1.default.connect(dbConfig);
-        console.log('Conectado a la base de datos SQL Server');
         return pool;
     }
     catch (err) {

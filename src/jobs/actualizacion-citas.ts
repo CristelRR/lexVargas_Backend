@@ -15,7 +15,6 @@ async function marcarCitasCompletadas() {
                   (fechaCita = CAST(GETDATE() AS DATE) AND horaCita <= CAST(GETDATE() AS TIME))
               )
         `);
-        console.log(`Citas completadas automáticamente: ${result.rowsAffected}`);
     } catch (error) {
         console.error("Error al marcar citas como completadas:", error);
     }
@@ -23,6 +22,5 @@ async function marcarCitasCompletadas() {
 
 // Programa la tarea para ejecutarse cada hora
 cron.schedule('0 * * * *', () => {
-    console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] Ejecutando tarea para actualizar citas completadas...`);
     marcarCitasCompletadas();
 });

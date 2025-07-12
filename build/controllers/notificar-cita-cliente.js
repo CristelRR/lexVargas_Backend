@@ -29,7 +29,6 @@ const notificarClienteCita = (clienteEmail, clienteNombre, fechaCita, motivoCita
   `;
     try {
         yield (0, mailer_1.enviarCorreo)(clienteEmail, asunto, mensaje);
-        console.log('Correo de confirmación enviado al cliente:', clienteEmail);
     }
     catch (error) {
         console.error('Error al enviar el correo de confirmación:', error);

@@ -55,10 +55,7 @@ export class PagoController {
                         JOIN tblCliente_Servicio cs ON cs.idCliente = c.idCliente AND cs.idServicio = s.idServicio  -- JOIN adicional para obtener el folio
                         where cs.folio = @folio ;
                 `);
-                res.status(200).json(result.recordset); 
-                console.log("Se muestran los datos back")
-                console.log(folio)
-                
+                res.status(200).json(result.recordset);                 
         } catch (e) {
             console.error('Error al obtener los pagos:', e);
             res.status(500).json({ message: 'Error al obtener los pagos' });
@@ -67,7 +64,6 @@ export class PagoController {
 
     // Método para crear un nuevo pago
     async crearPago(req: Request, res: Response): Promise<void> {
-        console.log(req.body);
         try {
             const nuevoPago = new Pago();
             nuevoPago.monto = req.body.monto;
