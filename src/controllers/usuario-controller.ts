@@ -9,6 +9,7 @@ import bcrypt from "bcryptjs";
 import logger from "../logger/logger";
 import { registerFailedAttempt, clearFailedAttempts } from "../middlewares/ip-guard.middleware";
 
+
 class UsuarioController {
   async getUsuarios(req: Request, res: Response) {
     try {
