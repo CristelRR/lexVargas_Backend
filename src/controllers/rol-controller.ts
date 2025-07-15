@@ -8,7 +8,7 @@ class RolController {
             const roles = await rolModel.getRoles();
             res.json(roles);
         } catch (error) {
-            console.error('Error al obtener roles:', error);
+            logger.error('Error al obtener roles:', error);
             res.status(500).json({ message: 'Error al obtener roles' });
         }
     }
@@ -19,7 +19,7 @@ class RolController {
             await rolModel.crearRol(rolData);
             res.status(201).json({ message: 'Rol creado exitosamente' });
         } catch (error) {
-            console.error('Error al crear rol:', error);
+            logger.error('Error al crear rol:', error);
             res.status(500).json({ message: 'Error al crear rol' });
         }
     }
@@ -30,7 +30,7 @@ class RolController {
             await rolModel.updateRol(rolData);
             res.json({ message: 'Rol actualizado exitosamente' });
         } catch (error) {
-            console.error('Error al actualizar rol:', error);
+            logger.error('Error al actualizar rol:', error);
             res.status(500).json({ message: 'Error al actualizar rol' });
         }
     }
@@ -41,7 +41,7 @@ class RolController {
             await rolModel.deleteRol(idRol);
             res.json({ message: 'Rol eliminado exitosamente' });
         } catch (error) {
-            console.error('Error al eliminar rol:', error);
+            logger.error('Error al eliminar rol:', error);
             res.status(500).json({ message: 'Error al eliminar rol' });
         }
     }

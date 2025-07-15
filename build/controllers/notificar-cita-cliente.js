@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.notificarClienteCita = void 0;
 const mailer_1 = require("../config/mailer");
+const logger_1 = __importDefault(require("../logger/logger"));
 const notificarClienteCita = (clienteEmail, clienteNombre, fechaCita, motivoCita, abogadoNombre, nombreServicio, descripcionServicio, costoServicio) => __awaiter(void 0, void 0, void 0, function* () {
     const asunto = `Confirmación de Cita - ${clienteNombre}`;
     const mensaje = `
@@ -31,7 +35,7 @@ const notificarClienteCita = (clienteEmail, clienteNombre, fechaCita, motivoCita
         yield (0, mailer_1.enviarCorreo)(clienteEmail, asunto, mensaje);
     }
     catch (error) {
-        console.error('Error al enviar el correo de confirmación:', error);
+        logger_1.default.error('Error al enviar el correo de confirmación:', error);
     }
 });
 exports.notificarClienteCita = notificarClienteCita;

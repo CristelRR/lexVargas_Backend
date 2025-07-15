@@ -8,4 +8,4 @@ const testEmail = async () => {
   await enviarCorreo(destinatario, asunto, mensaje);
 };
 
-testEmail().catch(console.error);
+testEmail().catch(logger.error);

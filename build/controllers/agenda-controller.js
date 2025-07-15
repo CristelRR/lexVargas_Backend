@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.agendaController = void 0;
 const agenda_model_1 = __importDefault(require("../models/agenda-model"));
+const logger_1 = __importDefault(require("../logger/logger"));
 class AgendaController {
     getAgendas(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -22,7 +23,7 @@ class AgendaController {
                 res.json(agendas);
             }
             catch (error) {
-                console.error('Error al obtener agendas:', error);
+                logger_1.default.error('Error al obtener agendas:', error);
                 res.status(500).json({ message: 'Error al obtener agendas' });
             }
         });
@@ -35,7 +36,7 @@ class AgendaController {
                 res.status(201).json({ message: 'Agenda creado exitosamente' });
             }
             catch (error) {
-                console.error('Error al crear agenda:', error);
+                logger_1.default.error('Error al crear agenda:', error);
                 res.status(500).json({ message: 'Error al crear agenda' });
             }
         });
@@ -49,7 +50,7 @@ class AgendaController {
                 res.json({ message: 'Agenda actualizado exitosamente' });
             }
             catch (error) {
-                console.error('Error al actualizar agenda:', error);
+                logger_1.default.error('Error al actualizar agenda:', error);
                 res.status(500).json({ message: 'Error al actualizar agenda' });
             }
         });
@@ -62,7 +63,7 @@ class AgendaController {
                 res.json({ message: 'Agenda eliminado exitosamente' });
             }
             catch (error) {
-                console.error('Error al eliminar agenda:', error);
+                logger_1.default.error('Error al eliminar agenda:', error);
                 res.status(500).json({ message: 'Error al eliminar agenda' });
             }
         });

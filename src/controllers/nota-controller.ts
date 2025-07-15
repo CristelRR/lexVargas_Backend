@@ -11,7 +11,7 @@ class NotaController {
             const notas = await notaModel.getNotas();
             res.json(notas);
         } catch (error) {
-            console.error('Error al obtener notas:', error);
+            logger.error('Error al obtener notas:', error);
             res.status(500).json({ message: 'Error al obtener notas' });
         }
     }
@@ -32,7 +32,7 @@ class NotaController {
             );
             res.json(notas);
         } catch (error) {
-            console.error('Error al obtener notas:', error);
+            logger.error('Error al obtener notas:', error);
             res.status(500).json({ message: 'Error al obtener notas' });
         }
     }
@@ -62,7 +62,7 @@ class NotaController {
           await notaModel.crearNota(nuevaNota); // Llama al modelo para guardar la nota
           res.status(201).json({ message: 'Nota creada exitosamente' });
         } catch (error) {
-          console.error('Error al crear nota:', error);
+          logger.error('Error al crear nota:', error);
           res.status(500).json({ message: 'Error al crear nota' });
         }
       }
@@ -81,7 +81,7 @@ class NotaController {
             await notaModel.updateNota(notaData);
             res.json({ message: 'Nota actualizada exitosamente' });
         } catch (error) {
-            console.error('Error al actualizar nota:', error);
+            logger.error('Error al actualizar nota:', error);
             res.status(500).json({ message: 'Error al actualizar nota' });
         }
     }
@@ -99,7 +99,7 @@ class NotaController {
             await notaModel.deleteNota(Number(idNota));
             res.json({ message: 'Nota eliminada exitosamente' });
         } catch (error) {
-            console.error('Error al eliminar nota:', error);
+            logger.error('Error al eliminar nota:', error);
             res.status(500).json({ message: 'Error al eliminar nota' });
         }
     }
@@ -121,7 +121,7 @@ class NotaController {
 
             res.json(nota[0]);
         } catch (error) {
-            console.error('Error al obtener la nota:', error);
+            logger.error('Error al obtener la nota:', error);
             res.status(500).json({ message: 'Error al obtener la nota' });
         }
     }
@@ -143,7 +143,7 @@ async getNotasPorCita(req: Request, res: Response) {
 
         res.json(notas);
     } catch (error) {
-        console.error('Error al obtener notas por cita:', error);
+        logger.error('Error al obtener notas por cita:', error);
         res.status(500).json({ message: 'Error al obtener notas por cita' });
     }
 }

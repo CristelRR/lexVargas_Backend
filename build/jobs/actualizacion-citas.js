@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_cron_1 = __importDefault(require("node-cron"));
 const db_1 = require("../config/db");
+const logger_1 = __importDefault(require("../logger/logger")); // Ruta ajustada a tu estructura
 function marcarCitasCompletadas() {
     return __awaiter(this, void 0, void 0, function* () {
         const pool = yield (0, db_1.connectDB)();
@@ -29,7 +30,7 @@ function marcarCitasCompletadas() {
         `);
         }
         catch (error) {
-            console.error("Error al marcar citas como completadas:", error);
+            logger_1.default.error("Error al marcar citas como completadas:", error);
         }
     });
 }

@@ -4,3 +4,119 @@
 2025-07-12T02:04:44.822Z [INFO]: OTP enviado a cristel23rr@gmail.com
 2025-07-12T02:10:29.430Z [INFO]: OTP enviado a cristel23rr@gmail.com
 2025-07-12T02:54:17.537Z [INFO]: OTP enviado a cristel23rr@gmail.com
+2025-07-15T18:37:01.556Z [INFO]: OTP enviado a cristel23rr@gmail.com
+2025-07-15T18:44:25.302Z [ERROR]: Error en el login: ReferenceError: logger is not defined
+2025-07-15T18:45:01.221Z [ERROR]: Error en el login: ReferenceError: logger is not defined
+2025-07-15T18:48:19.604Z [INFO]: Servidor escuchando en el puerto 3000
+2025-07-15T18:48:19.653Z [INFO]: Conectado a la base de datos
+2025-07-15T18:48:29.423Z [INFO]: ::1 - - [15/Jul/2025:18:48:29 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T18:48:31.421Z [INFO]: OTP enviado a cristel23rr@gmail.com
+2025-07-15T18:48:31.425Z [INFO]: ::1 - - [15/Jul/2025:18:48:31 +0000] "POST /usuarios/login HTTP/1.1" 200 57 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T18:48:54.891Z [INFO]: ::1 - - [15/Jul/2025:18:48:54 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T18:48:54.908Z [ERROR]: Error en el login: ReferenceError: logger is not defined
+2025-07-15T18:48:54.910Z [INFO]: ::1 - - [15/Jul/2025:18:48:54 +0000] "POST /usuarios/login HTTP/1.1" 500 38 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T18:49:42.067Z [INFO]: ::1 - - [15/Jul/2025:18:49:42 +0000] "OPTIONS /usuarios/verify-otp HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T18:49:42.105Z [INFO]: ::1 - - [15/Jul/2025:18:49:42 +0000] "POST /usuarios/verify-otp HTTP/1.1" 200 359 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T18:49:42.157Z [INFO]: ::1 - - [15/Jul/2025:18:49:42 +0000] "OPTIONS /citas/consultar-citaC/100006 HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T18:49:42.191Z [INFO]: ::1 - - [15/Jul/2025:18:49:42 +0000] "GET /citas/consultar-citaC/100006 HTTP/1.1" 304 - "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T18:59:15.855Z [INFO]: Servidor escuchando en el puerto 3000
+2025-07-15T18:59:15.898Z [INFO]: Conectado a la base de datos
+2025-07-15T19:00:16.239Z [INFO]: Servidor escuchando en el puerto 3000
+2025-07-15T19:00:16.310Z [INFO]: Conectado a la base de datos
+2025-07-15T19:00:26.428Z [INFO]: Servidor escuchando en el puerto 3000
+2025-07-15T19:00:26.537Z [INFO]: Conectado a la base de datos
+2025-07-15T19:00:35.853Z [INFO]: Servidor escuchando en el puerto 3000
+2025-07-15T19:00:36.102Z [INFO]: Conectado a la base de datos
+2025-07-15T19:02:11.851Z [INFO]: Servidor escuchando en el puerto 3000
+2025-07-15T19:02:11.897Z [INFO]: Conectado a la base de datos
+2025-07-15T19:02:23.513Z [INFO]: ::1 - - [15/Jul/2025:19:02:23 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:02:23.725Z [INFO]: Intento fallido registrado para IP: ::1 (1/3)
+2025-07-15T19:02:23.729Z [INFO]: ::1 - - [15/Jul/2025:19:02:23 +0000] "POST /usuarios/login HTTP/1.1" 401 38 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:02:31.565Z [INFO]: ::1 - - [15/Jul/2025:19:02:31 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:02:31.719Z [INFO]: Intento fallido registrado para IP: ::1 (2/3)
+2025-07-15T19:02:31.720Z [INFO]: ::1 - - [15/Jul/2025:19:02:31 +0000] "POST /usuarios/login HTTP/1.1" 401 38 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:02:36.630Z [INFO]: ::1 - - [15/Jul/2025:19:02:36 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:02:36.771Z [INFO]: Intento fallido registrado para IP: ::1 (3/3)
+2025-07-15T19:02:36.773Z [INFO]: ::1 - - [15/Jul/2025:19:02:36 +0000] "POST /usuarios/login HTTP/1.1" 401 38 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:02:44.469Z [INFO]: ::1 - - [15/Jul/2025:19:02:44 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:02:44.478Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:02:44.479Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:02:44.668Z [INFO]: Intento fallido registrado para IP: ::1 (4/3)
+2025-07-15T19:02:44.669Z [INFO]: ::1 - - [15/Jul/2025:19:02:44 +0000] "POST /usuarios/login HTTP/1.1" 401 38 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:14:15.758Z [INFO]: ::1 - - [15/Jul/2025:19:14:15 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:14:15.762Z [INFO]: Intento fallido registrado para IP: ::1
+2025-07-15T19:14:15.917Z [INFO]: Intento fallido registrado para IP: ::1 (1/3)
+2025-07-15T19:14:15.919Z [INFO]: ::1 - - [15/Jul/2025:19:14:15 +0000] "POST /usuarios/login HTTP/1.1" 401 38 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:14:19.338Z [INFO]: Intento fallido registrado para IP: ::1 (2/3)
+2025-07-15T19:14:19.339Z [INFO]: ::1 - - [15/Jul/2025:19:14:19 +0000] "POST /usuarios/login HTTP/1.1" 401 38 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:14:22.013Z [INFO]: ::1 - - [15/Jul/2025:19:14:22 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:14:22.161Z [INFO]: Intento fallido registrado para IP: ::1 (3/3)
+2025-07-15T19:14:22.162Z [INFO]: ::1 - - [15/Jul/2025:19:14:22 +0000] "POST /usuarios/login HTTP/1.1" 401 38 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:14:24.432Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:14:24.434Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:14:24.582Z [INFO]: Intento fallido registrado para IP: ::1 (4/3)
+2025-07-15T19:14:24.583Z [INFO]: ::1 - - [15/Jul/2025:19:14:24 +0000] "POST /usuarios/login HTTP/1.1" 401 38 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:14:27.704Z [INFO]: ::1 - - [15/Jul/2025:19:14:27 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:14:27.710Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:14:27.710Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:14:27.873Z [INFO]: Intento fallido registrado para IP: ::1 (5/3)
+2025-07-15T19:14:27.876Z [INFO]: ::1 - - [15/Jul/2025:19:14:27 +0000] "POST /usuarios/login HTTP/1.1" 401 38 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:16:49.682Z [INFO]: Servidor escuchando en el puerto 3000
+2025-07-15T19:16:49.727Z [INFO]: Conectado a la base de datos
+2025-07-15T19:17:41.778Z [INFO]: Servidor escuchando en el puerto 3000
+2025-07-15T19:17:41.972Z [INFO]: Conectado a la base de datos
+2025-07-15T19:19:53.164Z [INFO]: ::1 - - [15/Jul/2025:19:19:53 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:19:53.236Z [INFO]: ⚠️ Intento fallido registrado para IP: ::1 (1/3)
+2025-07-15T19:19:53.239Z [INFO]: ::1 - - [15/Jul/2025:19:19:53 +0000] "POST /usuarios/login HTTP/1.1" 401 38 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:19:56.591Z [INFO]: ⚠️ Intento fallido registrado para IP: ::1 (2/3)
+2025-07-15T19:19:56.593Z [INFO]: ::1 - - [15/Jul/2025:19:19:56 +0000] "POST /usuarios/login HTTP/1.1" 401 38 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:19:59.498Z [INFO]: ::1 - - [15/Jul/2025:19:19:59 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:19:59.517Z [INFO]: ⚠️ Intento fallido registrado para IP: ::1 (3/3)
+2025-07-15T19:19:59.519Z [INFO]: ::1 - - [15/Jul/2025:19:19:59 +0000] "POST /usuarios/login HTTP/1.1" 401 38 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:20:01.950Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:20:03.415Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:20:03.732Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:20:03.947Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:20:05.515Z [INFO]: ::1 - - [15/Jul/2025:19:20:05 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:20:05.518Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:20:05.776Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:21:59.251Z [INFO]: ::1 - - [15/Jul/2025:19:21:59 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:21:59.255Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:22:02.048Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:22:09.101Z [INFO]: ::1 - - [15/Jul/2025:19:22:09 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:22:09.107Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:22:10.135Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:22:10.404Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:22:10.701Z [WARN]: IP bloqueada por actividad sospechosa: ::1
+2025-07-15T19:22:46.535Z [INFO]: Servidor escuchando en el puerto 3000
+2025-07-15T19:22:46.594Z [INFO]: Conectado a la base de datos
+2025-07-15T19:43:23.115Z [INFO]: Servidor escuchando en el puerto 3000
+2025-07-15T19:43:23.155Z [INFO]: Conectado a la base de datos
+2025-07-15T19:48:15.894Z [INFO]: Servidor escuchando en el puerto 3000
+2025-07-15T19:48:15.935Z [INFO]: Conectado a la base de datos
+2025-07-15T19:48:54.133Z [INFO]: ::1 - - [15/Jul/2025:19:48:54 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:48:56.325Z [INFO]: OTP enviado a cristel23rr@gmail.com
+2025-07-15T19:48:56.329Z [INFO]: ::1 - - [15/Jul/2025:19:48:56 +0000] "POST /usuarios/login HTTP/1.1" 200 57 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:49:18.428Z [INFO]: ::1 - - [15/Jul/2025:19:49:18 +0000] "OPTIONS /usuarios/verify-otp HTTP/1.1" 204 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:49:18.484Z [INFO]: ::1 - - [15/Jul/2025:19:49:18 +0000] "POST /usuarios/verify-otp HTTP/1.1" 200 359 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:49:18.572Z [INFO]: ::1 - - [15/Jul/2025:19:49:18 +0000] "OPTIONS /citas/consultar-citaC/100006 HTTP/1.1" 204 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:49:18.786Z [INFO]: ::1 - - [15/Jul/2025:19:49:18 +0000] "GET /citas/consultar-citaC/100006 HTTP/1.1" 200 13396 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:50:45.419Z [INFO]: ::1 - - [15/Jul/2025:19:50:45 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:50:46.993Z [INFO]: OTP enviado a cristel23rr@gmail.com
+2025-07-15T19:50:46.995Z [INFO]: ::1 - - [15/Jul/2025:19:50:46 +0000] "POST /usuarios/login HTTP/1.1" 200 57 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:50:57.935Z [INFO]: ::1 - - [15/Jul/2025:19:50:57 +0000] "OPTIONS /usuarios/verify-otp HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:50:57.960Z [INFO]: ::1 - - [15/Jul/2025:19:50:57 +0000] "POST /usuarios/verify-otp HTTP/1.1" 200 359 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:50:58.041Z [INFO]: ::1 - - [15/Jul/2025:19:50:58 +0000] "OPTIONS /citas/consultar-citaC/100006 HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:50:58.088Z [INFO]: ::1 - - [15/Jul/2025:19:50:58 +0000] "GET /citas/consultar-citaC/100006 HTTP/1.1" 304 - "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:54:08.756Z [INFO]: ::1 - - [15/Jul/2025:19:54:08 +0000] "OPTIONS /citas/consultar-citaC/100006 HTTP/1.1" 204 0 "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:54:08.833Z [INFO]: ::1 - - [15/Jul/2025:19:54:08 +0000] "GET /citas/consultar-citaC/100006 HTTP/1.1" 304 - "http://localhost:4200/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:58:00.168Z [INFO]: ::1 - - [15/Jul/2025:19:58:00 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:58:02.238Z [INFO]: OTP enviado a cristel23rr@gmail.com
+2025-07-15T19:58:02.243Z [INFO]: ::1 - - [15/Jul/2025:19:58:02 +0000] "POST /usuarios/login HTTP/1.1" 200 57 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:58:12.005Z [INFO]: ::1 - - [15/Jul/2025:19:58:12 +0000] "OPTIONS /usuarios/verify-otp HTTP/1.1" 204 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:58:12.049Z [INFO]: ::1 - - [15/Jul/2025:19:58:12 +0000] "POST /usuarios/verify-otp HTTP/1.1" 200 359 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:58:12.101Z [INFO]: ::1 - - [15/Jul/2025:19:58:12 +0000] "OPTIONS /citas/consultar-citaC/100006 HTTP/1.1" 204 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T19:58:12.155Z [INFO]: ::1 - - [15/Jul/2025:19:58:12 +0000] "GET /citas/consultar-citaC/100006 HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T20:03:08.650Z [INFO]: ::1 - - [15/Jul/2025:20:03:08 +0000] "OPTIONS /usuarios/login HTTP/1.1" 204 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+2025-07-15T20:03:08.821Z [INFO]: ⚠️ Intento fallido registrado para IP: ::1 (1/3)
+2025-07-15T20:03:08.822Z [INFO]: ::1 - - [15/Jul/2025:20:03:08 +0000] "POST /usuarios/login HTTP/1.1" 401 38 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"

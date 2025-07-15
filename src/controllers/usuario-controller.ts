@@ -8,7 +8,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import logger from "../logger/logger";
 import { registerFailedAttempt, clearFailedAttempts } from "../middlewares/ip-guard.middleware";
-
+import validator from "validator";
 
 class UsuarioController {
   async getUsuarios(req: Request, res: Response) {
@@ -24,7 +24,22 @@ class UsuarioController {
   async login(req: Request, res: Response) {
     const ip = req.ip ?? req.socket?.remoteAddress ?? "unknown";
     try {
-      const { email, password, recaptcha } = req.body;
+      const rawEmail = req.body.email ?? '';
+      const rawPassword = req.body.password ?? '';
+      const recaptcha = req.body.recaptcha ?? '';
+
+      if (!validator.isEmail(rawEmail)) {
+        registerFailedAttempt(ip);
+        return res.status(400).json({ message: "Correo inválido" });
+      }
+
+      if (validator.isEmpty(rawPassword)) {
+        registerFailedAttempt(ip);
+        return res.status(400).json({ message: "Contraseña requerida" });
+      }
+
+      const email = (validator.normalizeEmail(rawEmail) || '') as string;
+      const password = validator.trim(rawPassword);
 
       const usuario = await usuarioModel.findByEmail(email);
       if (!usuario) {
@@ -74,7 +89,15 @@ class UsuarioController {
 
   async verificarOTP(req: Request, res: Response) {
     try {
-      const { email, otp } = req.body;
+      const rawEmail = req.body.email ?? '';
+      const rawOtp = req.body.otp ?? '';
+
+      if (!validator.isEmail(rawEmail) || validator.isEmpty(rawOtp)) {
+        return res.status(400).json({ message: "Datos inválidos" });
+      }
+
+      const email = (validator.normalizeEmail(rawEmail) || '') as string;
+      const otp = validator.escape(rawOtp);
 
       const usuario = await usuarioModel.findByEmail(email);
       if (!usuario) {
@@ -134,8 +157,14 @@ class UsuarioController {
   async crearUsuario(req: Request, res: Response) {
     try {
       const usuarioData = req.body;
-      const hashedPassword = await bcrypt.hash(usuarioData.pass, 10);
-      usuarioData.pass = hashedPassword;
+
+      if (!validator.isEmail(usuarioData.nombreUsuario)) {
+        return res.status(400).json({ message: "Correo inválido" });
+      }
+
+      usuarioData.nombreUsuario = validator.normalizeEmail(usuarioData.nombreUsuario) ?? '';
+      usuarioData.pass = await bcrypt.hash(usuarioData.pass, 10);
+
       await usuarioModel.crearUsuario(usuarioData);
       res.status(201).json({ message: "Usuario creado exitosamente" });
     } catch (error) {
@@ -147,6 +176,11 @@ class UsuarioController {
   async updateUsuario(req: Request, res: Response) {
     try {
       const usuarioData = req.body;
+
+      if (usuarioData.nombreUsuario && validator.isEmail(usuarioData.nombreUsuario)) {
+        usuarioData.nombreUsuario = validator.normalizeEmail(usuarioData.nombreUsuario) ?? '';
+      }
+
       await usuarioModel.updateUsuario(usuarioData);
       res.json({ message: "Usuario actualizado exitosamente" });
     } catch (error) {
@@ -168,8 +202,12 @@ class UsuarioController {
 
   async enviarCorreoRecuperacion(req: Request, res: Response) {
     try {
-      const { email } = req.body;
+      const rawEmail = req.body.email ?? '';
+      if (!validator.isEmail(rawEmail)) {
+        return res.status(400).json({ message: "Correo inválido" });
+      }
 
+      const email = (validator.normalizeEmail(rawEmail) || '') as string;
       const usuario = await usuarioModel.findByEmail(email);
       if (!usuario) {
         return res.status(404).json({ message: "Usuario no encontrado" });
@@ -198,7 +236,11 @@ class UsuarioController {
 
   async restablecerContrasena(req: Request, res: Response) {
     try {
-      const { token, nuevaContrasena } = req.body;
+      const rawToken = req.body.token ?? '';
+      const nueva = req.body.nuevaContrasena ?? '';
+
+      const token = validator.escape(rawToken);
+      const nuevaContrasena = validator.trim(nueva);
 
       const registro = await usuarioModel.buscarToken(token);
       if (!registro) {

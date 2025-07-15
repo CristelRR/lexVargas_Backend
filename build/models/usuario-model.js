@@ -8,8 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const db_1 = require("../config/db");
+const logger_1 = __importDefault(require("../logger/logger"));
 class UsuarioModel {
     findByEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -109,7 +113,7 @@ class UsuarioModel {
                 `);
             }
             catch (error) {
-                console.error("Error al insertar OTP en la base de datos:", error);
+                logger_1.default.error("Error al insertar OTP en la base de datos:", error);
             }
         });
     }
@@ -123,7 +127,7 @@ class UsuarioModel {
                     .query("DELETE FROM tblUsuarioOTP WHERE idUsuarioFK = @idUsuarioFK");
             }
             catch (error) {
-                console.error("Error al eliminar OTP:", error);
+                logger_1.default.error("Error al eliminar OTP:", error);
             }
         });
     }

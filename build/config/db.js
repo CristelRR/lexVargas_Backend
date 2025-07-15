@@ -41,7 +41,7 @@ const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
         return pool;
     }
     catch (err) {
-        console.error('Error al conectar a la base de datos:', err);
+        logger.error('Error al conectar a la base de datos:', err);
         process.exit(1);
     }
 });

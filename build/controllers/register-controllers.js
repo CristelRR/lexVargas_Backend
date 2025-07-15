@@ -29,7 +29,7 @@ class RegisterController {
                 res.json(result.recordset); // Enviar los resultados como respuesta
             }
             catch (error) {
-                console.error('Error al obtener los registros:', error);
+                logger.error('Error al obtener los registros:', error);
                 res.status(500).json({ message: 'Error al obtener los registros' });
             }
         });
@@ -70,7 +70,7 @@ class RegisterController {
                 res.status(201).json({ message: 'Usuario registrado con éxito.' });
             }
             catch (error) {
-                console.error('Error en el registro:', error);
+                logger.error('Error en el registro:', error);
                 res.status(500).json({ message: 'Error al registrar el usuario.' });
             }
         });

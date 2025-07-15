@@ -28,7 +28,7 @@ class CitaExpedienteModel {
                 `);
             return result.recordset;
         } catch (error) {
-            console.error("Error al obtener citas del expediente:", error);
+            logger.error("Error al obtener citas del expediente:", error);
             throw error;
         }
     }

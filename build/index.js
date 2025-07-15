@@ -12,6 +12,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// src/index.ts
+const dotenv_1 = __importDefault(require("dotenv"));
+// 1) Carga .env antes de todo
+dotenv_1.default.config();
+// 2) Anula console.* en producción
+if (process.env.NODE_ENV === 'production') {
+    console.log = () => { };
+    console.info = () => { };
+    console.debug = () => { };
+    console.warn = () => { };
+    // console.error = () => {}; // si quieres silenciar incluso errores
+}
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
@@ -33,6 +45,9 @@ const nota_route_1 = __importDefault(require("./routes/nota-route"));
 const cargarDocumentos_route_1 = __importDefault(require("./routes/cargarDocumentos-route"));
 const citas_expedientes_routes_1 = __importDefault(require("./routes/citas-expedientes-routes"));
 require("./jobs/temporalidadJob");
+// import './jobs/actualizacion-citas';
+const ip_guard_middleware_1 = require("./middlewares/ip-guard.middleware");
+const logger_1 = __importDefault(require("./logger/logger")); // tu Winston logger
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
@@ -41,27 +56,48 @@ class Server {
         this.connectToDatabase();
     }
     config() {
+        // Puerto
         this.app.set('port', process.env.PORT || 3000);
+        // Body parser
         this.app.use(express_1.default.json({ limit: '50mb' }));
         this.app.use(express_1.default.urlencoded({ limit: '50mb', extended: true }));
-        this.app.use((0, morgan_1.default)('dev'));
+        // 3) Morgan en dev vs prod
+        if (process.env.NODE_ENV !== 'production') {
+            // en desarrollo, loggea en consola con formato 'dev'
+            this.app.use((0, morgan_1.default)('dev'));
+        }
+        else {
+            // en producción, loggea via Winston (archivo + combined)
+            this.app.use((0, morgan_1.default)('combined', {
+                stream: {
+                    write: (msg) => logger_1.default.info(msg.trim()),
+                },
+            }));
+        }
+        // CORS
         this.app.use((0, cors_1.default)());
     }
     connectToDatabase() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 yield (0, db_1.connectDB)();
+                logger_1.default.info('Conectado a la base de datos');
             }
             catch (error) {
-                console.error('Error al conectar a la base de datos:', error.message);
+                // aquí usamos logger en lugar de console.error
+                logger_1.default.error('Error al conectar a la base de datos: ' + error.message);
                 process.exit(1);
             }
         });
     }
     routes() {
+        // Middleware de protección
+        this.app.use(ip_guard_middleware_1.ipAttackGuard);
+        // Ruta raíz
         this.app.get('/', (req, res) => {
             res.send('¡Hola, mundo!');
         });
+        // Rutas REST
         this.app.use('/roles', rol_route_1.default);
         this.app.use('/empleados', empleado_route_1.default);
         this.app.use('/register', register_routes_1.default);
@@ -80,7 +116,9 @@ class Server {
         this.app.use('/citasExpediente', citas_expedientes_routes_1.default);
     }
     start() {
-        this.app.listen(this.app.get('port'), () => {
+        const port = this.app.get('port');
+        this.app.listen(port, () => {
+            logger_1.default.info(`Servidor escuchando en el puerto ${port}`);
         });
     }
 }

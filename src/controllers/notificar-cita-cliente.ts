@@ -30,6 +30,6 @@ export const notificarClienteCita = async (
   try {
     await enviarCorreo(clienteEmail, asunto, mensaje);
   } catch (error) {
-    console.error('Error al enviar el correo de confirmación:', error);
+    logger.error('Error al enviar el correo de confirmación:', error);
   }
 };

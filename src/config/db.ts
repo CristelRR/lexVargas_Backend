@@ -32,7 +32,7 @@ export const connectDB = async () => {
         const pool = await sql.connect(dbConfig);
         return pool;
     } catch (err) {
-        console.error('Error al conectar a la base de datos:', err);
+        logger.error('Error al conectar a la base de datos:', err);
         process.exit(1);
     }
 };

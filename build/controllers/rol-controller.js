@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.rolController = void 0;
 const rol_model_1 = __importDefault(require("../models/rol-model"));
+const logger_1 = __importDefault(require("../logger/logger"));
 class RolController {
     getRoles(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -22,7 +23,7 @@ class RolController {
                 res.json(roles);
             }
             catch (error) {
-                console.error('Error al obtener roles:', error);
+                logger_1.default.error('Error al obtener roles:', error);
                 res.status(500).json({ message: 'Error al obtener roles' });
             }
         });
@@ -35,7 +36,7 @@ class RolController {
                 res.status(201).json({ message: 'Rol creado exitosamente' });
             }
             catch (error) {
-                console.error('Error al crear rol:', error);
+                logger_1.default.error('Error al crear rol:', error);
                 res.status(500).json({ message: 'Error al crear rol' });
             }
         });
@@ -48,7 +49,7 @@ class RolController {
                 res.json({ message: 'Rol actualizado exitosamente' });
             }
             catch (error) {
-                console.error('Error al actualizar rol:', error);
+                logger_1.default.error('Error al actualizar rol:', error);
                 res.status(500).json({ message: 'Error al actualizar rol' });
             }
         });
@@ -61,7 +62,7 @@ class RolController {
                 res.json({ message: 'Rol eliminado exitosamente' });
             }
             catch (error) {
-                console.error('Error al eliminar rol:', error);
+                logger_1.default.error('Error al eliminar rol:', error);
                 res.status(500).json({ message: 'Error al eliminar rol' });
             }
         });

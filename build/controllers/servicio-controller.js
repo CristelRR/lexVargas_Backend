@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.servicioController = void 0;
 const servicio_model_1 = __importDefault(require("../models/servicio-model"));
+const logger_1 = __importDefault(require("../logger/logger"));
 class ServicioController {
     getServicios(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -22,7 +23,7 @@ class ServicioController {
                 res.json(servicios);
             }
             catch (error) {
-                console.error('Error al obtener servicios:', error);
+                logger_1.default.error('Error al obtener servicios:', error);
                 res.status(500).json({ message: 'Error al obtener servicios' });
             }
         });
@@ -35,7 +36,7 @@ class ServicioController {
                 res.status(201).json({ message: 'Servicio creado exitosamente' });
             }
             catch (error) {
-                console.error('Error al crear servicio:', error);
+                logger_1.default.error('Error al crear servicio:', error);
                 res.status(500).json({ message: 'Error al crear servicio' });
             }
         });
@@ -48,7 +49,7 @@ class ServicioController {
                 res.json({ message: 'Servicio actualizado exitosamente' });
             }
             catch (error) {
-                console.error('Error al actualizar servicio:', error);
+                logger_1.default.error('Error al actualizar servicio:', error);
                 res.status(500).json({ message: 'Error al actualizar servicio' });
             }
         });
@@ -61,7 +62,7 @@ class ServicioController {
                 res.json({ message: 'Servicio eliminado exitosamente' });
             }
             catch (error) {
-                console.error('Error al eliminar servicio:', error);
+                logger_1.default.error('Error al eliminar servicio:', error);
                 res.status(500).json({ message: 'Error al eliminar servicio' });
             }
         });
@@ -78,7 +79,7 @@ class ServicioController {
                 res.json(servicios);
             }
             catch (error) {
-                console.error('Error al obtener servicios por abogado:', error);
+                logger_1.default.error('Error al obtener servicios por abogado:', error);
                 res.status(500).json({ message: 'Error al obtener servicios por abogado' });
             }
         });

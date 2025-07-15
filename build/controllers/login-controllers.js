@@ -48,7 +48,7 @@ class LoginController {
             }
             catch (error) {
                 // Captura y maneja errores
-                console.error('Error al iniciar sesión:', error);
+                logger.error('Error al iniciar sesión:', error);
                 res.status(500).json({ message: 'Error al iniciar sesión' });
             }
         });

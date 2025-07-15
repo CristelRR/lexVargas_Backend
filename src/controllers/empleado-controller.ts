@@ -8,7 +8,7 @@ class EmpleadoController {
             const empleados = await empleadoModel.getEmpleados();
             res.json(empleados);
         } catch (error) {
-            console.error('Error al obtener empleados:', error);
+            logger.error('Error al obtener empleados:', error);
             res.status(500).json({ message: 'Error al obtener empleados' });
         }
     }
@@ -25,7 +25,7 @@ class EmpleadoController {
             }
             res.status(200).json(empleado);
         } catch (error) {
-            console.error('Error al obtener empleado por ID:', error);
+            logger.error('Error al obtener empleado por ID:', error);
             res.status(500).json({ message: 'Error al obtener empleado' });
         }
     }
@@ -35,7 +35,7 @@ class EmpleadoController {
             const empleados = await empleadoModel.getAbogados();
             res.json(empleados);
         } catch (error) {
-            console.error('Error al obtener abogados:', error);
+            logger.error('Error al obtener abogados:', error);
             res.status(500).json({ message: 'Error al obtener abogados' });
         }
     }
@@ -46,7 +46,7 @@ class EmpleadoController {
             await empleadoModel.crearEmpleado(empleadoData);
             res.status(201).json({ message: 'Empleado creado exitosamente' });
         } catch (error) {
-            console.error('Error al crear empleado:', error);
+            logger.error('Error al crear empleado:', error);
             res.status(500).json({ message: 'Error al crear empleado' });
         }
     }
@@ -62,7 +62,7 @@ class EmpleadoController {
             await empleadoModel.updateEmpleado(idEmpleado, empleadoData); 
             res.json({ message: 'Empleado actualizado exitosamente' });
         } catch (error) {
-            console.error('Error al actualizar empleado:', error);
+            logger.error('Error al actualizar empleado:', error);
             res.status(500).json({ message: 'Error al actualizar empleado' });
         }
     }
@@ -73,7 +73,7 @@ class EmpleadoController {
             await empleadoModel.deleteEmpleado(idEmpleado);
             res.json({ message: 'Empleado eliminado exitosamente' });
         } catch (error) {
-            console.error('Error al eliminar empleado:', error);
+            logger.error('Error al eliminar empleado:', error);
             res.status(500).json({ message: 'Error al eliminar empleado' });
         }
     }

@@ -1,5 +1,6 @@
 import cron from 'node-cron';
 import { connectDB } from '../config/db';
+import logger from '../logger/logger'; // Ruta ajustada a tu estructura
 
 cron.schedule('09 19 * * *', async () => {
 
@@ -98,9 +99,9 @@ cron.schedule('09 19 * * *', async () => {
   } catch (error) {
     await transaction.rollback();
     if (error instanceof Error) {
-      console.error('Error durante cronjob. Se revirtió la transacción:', error.message);
+      logger.error('Error durante cronjob. Se revirtió la transacción:', error.message);
     } else {
-      console.error('Error desconocido durante cronjob. Se revirtió la transacción:', error);
+      logger.error('Error desconocido durante cronjob. Se revirtió la transacción:', error);
     }
   }
 });

@@ -55,6 +55,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const logger_1 = __importDefault(require("../logger/logger"));
 const ip_guard_middleware_1 = require("../middlewares/ip-guard.middleware");
+const validator_1 = __importDefault(require("validator"));
 class UsuarioController {
     getUsuarios(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -70,10 +71,22 @@ class UsuarioController {
     }
     login(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c;
+            var _a, _b, _c, _d, _e, _f;
             const ip = (_c = (_a = req.ip) !== null && _a !== void 0 ? _a : (_b = req.socket) === null || _b === void 0 ? void 0 : _b.remoteAddress) !== null && _c !== void 0 ? _c : "unknown";
             try {
-                const { email, password, recaptcha } = req.body;
+                const rawEmail = (_d = req.body.email) !== null && _d !== void 0 ? _d : '';
+                const rawPassword = (_e = req.body.password) !== null && _e !== void 0 ? _e : '';
+                const recaptcha = (_f = req.body.recaptcha) !== null && _f !== void 0 ? _f : '';
+                if (!validator_1.default.isEmail(rawEmail)) {
+                    (0, ip_guard_middleware_1.registerFailedAttempt)(ip);
+                    return res.status(400).json({ message: "Correo inválido" });
+                }
+                if (validator_1.default.isEmpty(rawPassword)) {
+                    (0, ip_guard_middleware_1.registerFailedAttempt)(ip);
+                    return res.status(400).json({ message: "Contraseña requerida" });
+                }
+                const email = (validator_1.default.normalizeEmail(rawEmail) || '');
+                const password = validator_1.default.trim(rawPassword);
                 const usuario = yield usuario_model_1.default.findByEmail(email);
                 if (!usuario) {
                     (0, ip_guard_middleware_1.registerFailedAttempt)(ip);
@@ -106,8 +119,15 @@ class UsuarioController {
     }
     verificarOTP(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
             try {
-                const { email, otp } = req.body;
+                const rawEmail = (_a = req.body.email) !== null && _a !== void 0 ? _a : '';
+                const rawOtp = (_b = req.body.otp) !== null && _b !== void 0 ? _b : '';
+                if (!validator_1.default.isEmail(rawEmail) || validator_1.default.isEmpty(rawOtp)) {
+                    return res.status(400).json({ message: "Datos inválidos" });
+                }
+                const email = (validator_1.default.normalizeEmail(rawEmail) || '');
+                const otp = validator_1.default.escape(rawOtp);
                 const usuario = yield usuario_model_1.default.findByEmail(email);
                 if (!usuario) {
                     return res.status(400).json({ message: "Usuario no encontrado" });
@@ -154,10 +174,14 @@ class UsuarioController {
     }
     crearUsuario(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             try {
                 const usuarioData = req.body;
-                const hashedPassword = yield bcryptjs_1.default.hash(usuarioData.pass, 10);
-                usuarioData.pass = hashedPassword;
+                if (!validator_1.default.isEmail(usuarioData.nombreUsuario)) {
+                    return res.status(400).json({ message: "Correo inválido" });
+                }
+                usuarioData.nombreUsuario = (_a = validator_1.default.normalizeEmail(usuarioData.nombreUsuario)) !== null && _a !== void 0 ? _a : '';
+                usuarioData.pass = yield bcryptjs_1.default.hash(usuarioData.pass, 10);
                 yield usuario_model_1.default.crearUsuario(usuarioData);
                 res.status(201).json({ message: "Usuario creado exitosamente" });
             }
@@ -169,8 +193,12 @@ class UsuarioController {
     }
     updateUsuario(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             try {
                 const usuarioData = req.body;
+                if (usuarioData.nombreUsuario && validator_1.default.isEmail(usuarioData.nombreUsuario)) {
+                    usuarioData.nombreUsuario = (_a = validator_1.default.normalizeEmail(usuarioData.nombreUsuario)) !== null && _a !== void 0 ? _a : '';
+                }
                 yield usuario_model_1.default.updateUsuario(usuarioData);
                 res.json({ message: "Usuario actualizado exitosamente" });
             }
@@ -195,8 +223,13 @@ class UsuarioController {
     }
     enviarCorreoRecuperacion(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             try {
-                const { email } = req.body;
+                const rawEmail = (_a = req.body.email) !== null && _a !== void 0 ? _a : '';
+                if (!validator_1.default.isEmail(rawEmail)) {
+                    return res.status(400).json({ message: "Correo inválido" });
+                }
+                const email = (validator_1.default.normalizeEmail(rawEmail) || '');
                 const usuario = yield usuario_model_1.default.findByEmail(email);
                 if (!usuario) {
                     return res.status(404).json({ message: "Usuario no encontrado" });
@@ -218,9 +251,12 @@ class UsuarioController {
     }
     restablecerContrasena(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a;
+            var _a, _b, _c;
             try {
-                const { token, nuevaContrasena } = req.body;
+                const rawToken = (_a = req.body.token) !== null && _a !== void 0 ? _a : '';
+                const nueva = (_b = req.body.nuevaContrasena) !== null && _b !== void 0 ? _b : '';
+                const token = validator_1.default.escape(rawToken);
+                const nuevaContrasena = validator_1.default.trim(nueva);
                 const registro = yield usuario_model_1.default.buscarToken(token);
                 if (!registro) {
                     return res.status(400).json({ message: "Token inválido" });
@@ -232,7 +268,7 @@ class UsuarioController {
                 yield usuario_model_1.default.actualizarContrasena(registro.idUsuarioFK, hashedPassword);
                 yield usuario_model_1.default.eliminarToken(registro.idUsuarioFK);
                 const usuario = yield usuario_model_1.default.findById(registro.idUsuarioFK);
-                const correoUsuario = (_a = usuario[0]) === null || _a === void 0 ? void 0 : _a.nombreUsuario;
+                const correoUsuario = (_c = usuario[0]) === null || _c === void 0 ? void 0 : _c.nombreUsuario;
                 if (correoUsuario) {
                     yield (0, mailer_1.enviarCorreo)(correoUsuario, "Confirmación de cambio de contraseña", `<p>Hola,</p>
            <p>Tu contraseña ha sido cambiada exitosamente. Si no realizaste este cambio, por favor contáctanos inmediatamente.</p>`);

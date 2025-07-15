@@ -84,7 +84,7 @@ class ExpedienteController {
     
         } catch (error) {
             const err = error as Error;
-            console.error('Error en actualizarProximaAudiencia:', err);
+            logger.error('Error en actualizarProximaAudiencia:', err);
     
             if (err.message.includes('Invalid column name')) {
                 res.status(500).json({
@@ -178,7 +178,7 @@ class ExpedienteController {
     
         } catch (error) {
             const err = error as Error;
-            console.error('Error en programarAudiencia:', err);
+            logger.error('Error en programarAudiencia:', err);
             res.status(500).json({
                 success: false,
                 message: 'Error al programar la audiencia',
@@ -226,7 +226,7 @@ class ExpedienteController {
     
         } catch (error) {
             const err = error as Error;
-            console.error('Error al obtener audiencia desde expediente:', err);
+            logger.error('Error al obtener audiencia desde expediente:', err);
             res.status(500).json({
                 success: false,
                 error: 'Error al obtener la audiencia desde tblExpediente',
@@ -293,7 +293,7 @@ class ExpedienteController {
                 documentos: documentosResult.recordset
             });
         } catch (error) {
-            console.error('Error al obtener el expediente completo:', error);
+            logger.error('Error al obtener el expediente completo:', error);
             res.status(500).json({ error: 'Error al obtener el expediente' });
         }
     }
@@ -331,7 +331,7 @@ class ExpedienteController {
                 documentoBase64: base64String
             });
         } catch (error) {
-            console.error('Error al obtener el documento:', error);
+            logger.error('Error al obtener el documento:', error);
             res.status(500).json({ error: 'Error al obtener el documento' });
         }
     }
@@ -453,7 +453,7 @@ class ExpedienteController {
     
             res.status(200).json(expedientes);
         } catch (error) {
-            console.error('Error al obtener los expedientes:', error);
+            logger.error('Error al obtener los expedientes:', error);
             res.status(500).json({ error: 'Error al obtener los expedientes' });
         }
     }
@@ -496,7 +496,7 @@ class ExpedienteController {
     
             res.status(200).json({ message: 'Documentos subidos exitosamente.' });
         } catch (error) {
-            console.error('Error al subir documentos:', error);
+            logger.error('Error al subir documentos:', error);
             res.status(500).json({ error: 'Hubo un error al procesar los documentos.' });
         }
     }
@@ -587,16 +587,16 @@ class ExpedienteController {
                 return res.status(200).json({ message: 'Expediente creado correctamente', idExpediente });
     
             } catch (error) {
-                console.error('Error al insertar expediente:', error);
+                logger.error('Error al insertar expediente:', error);
                 await transaction.rollback();
                 return res.status(500).json({ error: 'Error al insertar el expediente' });
             }
         } catch (error: unknown) {
             if (error instanceof Error) {
-                console.error('Error al conectar a la base de datos:', error.message);
+                logger.error('Error al conectar a la base de datos:', error.message);
                 return res.status(500).json({ error: 'Error al conectar a la base de datos', detalles: error.message });
             } else {
-                console.error('Error inesperado:', error);
+                logger.error('Error inesperado:', error);
                 return res.status(500).json({ error: 'Error inesperado al conectar a la base de datos' });
             }
         }
@@ -629,7 +629,7 @@ class ExpedienteController {
 
             res.status(200).json(result.recordset);
         } catch (error) {
-            console.error('Error al obtener el expediente:', error);
+            logger.error('Error al obtener el expediente:', error);
             res.status(500).json({ error: 'Error al obtener el expediente' });
         }
     }
@@ -742,11 +742,11 @@ class ExpedienteController {
                 res.status(200).json({ message: 'Expediente y documentos movidos al historial correctamente' });
             } catch (innerError) {
                 await transaction.rollback();
-                console.error('Error durante la transacción:', innerError);
+                logger.error('Error durante la transacción:', innerError);
                 res.status(500).json({ error: 'Error al mover el expediente al historial' });
             }
         } catch (error) {
-            console.error('Error al eliminar el expediente:', error);
+            logger.error('Error al eliminar el expediente:', error);
             res.status(500).json({ error: 'Error al eliminar el expediente' });
         }
     }
@@ -820,7 +820,7 @@ class ExpedienteController {
                 res.status(200).json(expedientes);
             })
             .catch(error => {
-                console.error('Error al obtener el historial de los expedientes:', error);
+                logger.error('Error al obtener el historial de los expedientes:', error);
                 res.status(500).json({ error: 'Error al obtener el historial de los expedientes' });
             });
     }
@@ -864,7 +864,7 @@ class ExpedienteController {
 
             res.status(200).json({ message: 'Expediente y documentos actualizados correctamente' });
         } catch (error) {
-            console.error('Error al actualizar el expediente:', error);
+            logger.error('Error al actualizar el expediente:', error);
             res.status(500).json({ error: 'Error al actualizar el expediente' });
         }
     }

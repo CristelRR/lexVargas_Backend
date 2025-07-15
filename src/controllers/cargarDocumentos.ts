@@ -19,7 +19,7 @@ class CargarDocumentosController {
 
             res.status(200).json(result.recordset);
         } catch (error) {
-            console.error('Error al obtener expedientes:', error);
+            logger.error('Error al obtener expedientes:', error);
             res.status(500).json({ error: 'Hubo un error al obtener los expedientes.' });
         }
     }
@@ -79,7 +79,7 @@ class CargarDocumentosController {
 
                 res.status(200).json(categoriasArray);
             } catch (error) {
-                console.error('Error al obtener categorías y subcategorías:', error);
+                logger.error('Error al obtener categorías y subcategorías:', error);
                 res.status(500).json({ error: 'Hubo un error al obtener las categorías y subcategorías.' });
             }
         }
@@ -104,7 +104,7 @@ async obtenerSubCategorias(req: Request, res: Response) {
 
         res.status(200).json(result.recordset);
     } catch (error) {
-        console.error('Error al obtener subcategorías:', error);
+        logger.error('Error al obtener subcategorías:', error);
         res.status(500).json({ error: 'Hubo un error al obtener las subcategorías.' });
     }
 }
@@ -174,7 +174,7 @@ async insertarDocumentos(req: Request, res: Response) {
 
         res.status(200).json({ message: 'Documentos subidos exitosamente.' });
     } catch (error) {
-        console.error('Error al subir documentos:', error);
+        logger.error('Error al subir documentos:', error);
         res.status(500).json({ error: 'Hubo un error al procesar los documentos.' });
     }
 }

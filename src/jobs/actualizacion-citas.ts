@@ -1,6 +1,7 @@
 import cron from 'node-cron';
 import { connectDB } from '../config/db'; 
 import moment from 'moment';
+import logger from '../logger/logger'; // Ruta ajustada a tu estructura
 
 async function marcarCitasCompletadas() {
     const pool = await connectDB();
@@ -16,7 +17,7 @@ async function marcarCitasCompletadas() {
               )
         `);
     } catch (error) {
-        console.error("Error al marcar citas como completadas:", error);
+        logger.error("Error al marcar citas como completadas:", error);
     }
 }
 

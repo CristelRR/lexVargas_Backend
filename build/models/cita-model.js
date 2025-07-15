@@ -8,8 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const db_1 = require("../config/db");
+const logger_1 = __importDefault(require("../logger/logger"));
 class CitaModel {
     getCitas() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -399,7 +403,7 @@ class CitaModel {
             }
             catch (error) {
                 yield transaction.rollback();
-                console.error('Error en la cancelación de la cita:', error);
+                logger_1.default.error('Error en la cancelación de la cita:', error);
                 throw new Error('Error en la cancelación de la cita: ' + error.message);
             }
         });
@@ -422,7 +426,7 @@ class CitaModel {
                 return { message: 'Estado de la cita actualizado a completada' };
             }
             catch (error) {
-                console.error('Error al actualizar la cita:', error);
+                logger_1.default.error('Error al actualizar la cita:', error);
                 throw new Error('Error al actualizar el estado de la cita: ' + error.message);
             }
         });

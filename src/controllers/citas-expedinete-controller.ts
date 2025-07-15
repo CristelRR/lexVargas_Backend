@@ -15,7 +15,7 @@ class CitaExpedienteController {
             const citas = await citaExpedienteModel.getCitasExpediente(Number(idExpediente));
             return res.json(citas); // Asegúrate de retornar la respuesta
         } catch (error) {
-            console.error("Error al obtener citas:", error);
+            logger.error("Error al obtener citas:", error);
             return res.status(500).json({ message: "Error al obtener citas" }); // Asegúrate de retornar la respuesta
         }
     }
@@ -26,7 +26,7 @@ class CitaExpedienteController {
             const expediente = await citaExpedienteModel.getExpediente();
             res.json(expediente);
         } catch (error) {
-            console.error('Error al obtener expediente:', error);
+            logger.error('Error al obtener expediente:', error);
             res.status(500).json({ message: 'Error al obtener expediente' });
         }
     }
@@ -41,7 +41,7 @@ class CitaExpedienteController {
                 res.status(400).json({ message: 'No se pudo crear la cita' });
             }
         } catch (error) {
-            console.error('Error al crear cita:', error);
+            logger.error('Error al crear cita:', error);
             res.status(500).json({ message: 'Error al crear cita' });
         }
     }
@@ -56,7 +56,7 @@ class CitaExpedienteController {
                 res.status(400).json({ message: 'No se pudo actualizar la cita' });
             }
         } catch (error) {
-            console.error('Error al actualizar cita:', error);
+            logger.error('Error al actualizar cita:', error);
             res.status(500).json({ message: 'Error al actualizar cita' });
         }
     }
@@ -71,7 +71,7 @@ class CitaExpedienteController {
                 res.status(400).json({ message: 'No se pudo eliminar la cita' });
             }
         } catch (error) {
-            console.error('Error al eliminar cita:', error);
+            logger.error('Error al eliminar cita:', error);
             res.status(500).json({ message: 'Error al eliminar cita' });
         }
     }

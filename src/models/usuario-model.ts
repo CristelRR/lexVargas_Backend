@@ -96,7 +96,7 @@ class UsuarioModel {
                 `);
 
     } catch (error) {
-      console.error("Error al insertar OTP en la base de datos:", error);
+      logger.error("Error al insertar OTP en la base de datos:", error);
     }
   }
 
@@ -109,7 +109,7 @@ class UsuarioModel {
         .query("DELETE FROM tblUsuarioOTP WHERE idUsuarioFK = @idUsuarioFK");
 
     } catch (error) {
-      console.error("Error al eliminar OTP:", error);
+      logger.error("Error al eliminar OTP:", error);
     }
   }
 

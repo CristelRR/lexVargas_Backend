@@ -1,0 +1,3 @@
+2025-07-15T18:44:25.302Z [ERROR]: Error en el login: ReferenceError: logger is not defined
+2025-07-15T18:45:01.221Z [ERROR]: Error en el login: ReferenceError: logger is not defined
+2025-07-15T18:48:54.908Z [ERROR]: Error en el login: ReferenceError: logger is not defined

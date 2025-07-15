@@ -8,7 +8,7 @@ class AgendaController {
             const agendas = await agendaModel.getAgendas();
             res.json(agendas);
         } catch (error) {
-            console.error('Error al obtener agendas:', error);
+            logger.error('Error al obtener agendas:', error);
             res.status(500).json({ message: 'Error al obtener agendas' });
         }
     }
@@ -19,7 +19,7 @@ class AgendaController {
             await agendaModel.crearAgenda(agendaData);
             res.status(201).json({ message: 'Agenda creado exitosamente' });
         } catch (error) {
-            console.error('Error al crear agenda:', error);
+            logger.error('Error al crear agenda:', error);
             res.status(500).json({ message: 'Error al crear agenda' });
         }
     }
@@ -31,7 +31,7 @@ class AgendaController {
             await agendaModel.updateAgenda(agendaData);
             res.json({ message: 'Agenda actualizado exitosamente' });
         } catch (error) {
-            console.error('Error al actualizar agenda:', error);
+            logger.error('Error al actualizar agenda:', error);
             res.status(500).json({ message: 'Error al actualizar agenda' });
         }
     }
@@ -42,7 +42,7 @@ class AgendaController {
             await agendaModel.deleteAgenda(idAgenda);
             res.json({ message: 'Agenda eliminado exitosamente' });
         } catch (error) {
-            console.error('Error al eliminar agenda:', error);
+            logger.error('Error al eliminar agenda:', error);
             res.status(500).json({ message: 'Error al eliminar agenda' });
         }
     }

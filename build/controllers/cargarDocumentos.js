@@ -8,9 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.cargarDocumentosController = void 0;
 const db_1 = require("../config/db");
+const logger_1 = __importDefault(require("../logger/logger"));
 class CargarDocumentosController {
     // Método para obtener los expedientes
     obtenerExpedientes(req, res) {
@@ -26,7 +30,7 @@ class CargarDocumentosController {
                 res.status(200).json(result.recordset);
             }
             catch (error) {
-                console.error('Error al obtener expedientes:', error);
+                logger_1.default.error('Error al obtener expedientes:', error);
                 res.status(500).json({ error: 'Hubo un error al obtener los expedientes.' });
             }
         });
@@ -69,7 +73,7 @@ class CargarDocumentosController {
                 res.status(200).json(categoriasArray);
             }
             catch (error) {
-                console.error('Error al obtener categorías y subcategorías:', error);
+                logger_1.default.error('Error al obtener categorías y subcategorías:', error);
                 res.status(500).json({ error: 'Hubo un error al obtener las categorías y subcategorías.' });
             }
         });
@@ -94,7 +98,7 @@ class CargarDocumentosController {
                 res.status(200).json(result.recordset);
             }
             catch (error) {
-                console.error('Error al obtener subcategorías:', error);
+                logger_1.default.error('Error al obtener subcategorías:', error);
                 res.status(500).json({ error: 'Hubo un error al obtener las subcategorías.' });
             }
         });
@@ -153,7 +157,7 @@ class CargarDocumentosController {
                 res.status(200).json({ message: 'Documentos subidos exitosamente.' });
             }
             catch (error) {
-                console.error('Error al subir documentos:', error);
+                logger_1.default.error('Error al subir documentos:', error);
                 res.status(500).json({ error: 'Hubo un error al procesar los documentos.' });
             }
         });

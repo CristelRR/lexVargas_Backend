@@ -8,10 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.pagoController = exports.PagoController = void 0;
 const db_1 = require("../config/db"); // Importa la conexión a la base de datos
 const gestionPago_model_1 = require("../models/gestionPago-model");
+const logger_1 = __importDefault(require("../logger/logger"));
 class PagoController {
     //Método para obtener FOLIO 
     // async obtenerFolio(req: Request, res: Response): Promise<void> {
@@ -34,7 +38,7 @@ class PagoController {
     //             `);
     //         res.status(200).json(result.recordset);
     //     } catch (e) {
-    //         console.error('Error al obtener el folio:', e);
+    //         logger.error('Error al obtener el folio:', e);
     //         res.status(500).json({ message: 'Error al obtener el folio' });
     //     }
     // }    
@@ -64,7 +68,7 @@ class PagoController {
                 res.status(200).json(result.recordset);
             }
             catch (e) {
-                console.error('Error al obtener los pagos:', e);
+                logger_1.default.error('Error al obtener los pagos:', e);
                 res.status(500).json({ message: 'Error al obtener los pagos' });
             }
         });
@@ -106,7 +110,7 @@ class PagoController {
                 });
             }
             catch (error) {
-                console.error('Error al crear el pago:', error);
+                logger_1.default.error('Error al crear el pago:', error);
                 res.status(500).json({ message: 'Error al crear el pago' });
             }
         });

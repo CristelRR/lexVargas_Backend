@@ -16,4 +16,4 @@ const testEmail = () => __awaiter(void 0, void 0, void 0, function* () {
     const mensaje = '<h1>Este es un correo de prueba</h1><p>Hola, este es un mensaje de prueba.</p>';
     yield (0, mailer_1.enviarCorreo)(destinatario, asunto, mensaje);
 });
-testEmail().catch(console.error);
+testEmail().catch(logger.error);

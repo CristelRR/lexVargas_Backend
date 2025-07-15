@@ -8,7 +8,7 @@ class ServicioController {
             const servicios = await servicioModel.getServicios();
             res.json(servicios);
         } catch (error) {
-            console.error('Error al obtener servicios:', error);
+            logger.error('Error al obtener servicios:', error);
             res.status(500).json({ message: 'Error al obtener servicios' });
         }
     }
@@ -19,7 +19,7 @@ class ServicioController {
             await servicioModel.crearServicio(servicioData);
             res.status(201).json({ message: 'Servicio creado exitosamente' });
         } catch (error) {
-            console.error('Error al crear servicio:', error);
+            logger.error('Error al crear servicio:', error);
             res.status(500).json({ message: 'Error al crear servicio' });
         }
     }
@@ -30,7 +30,7 @@ class ServicioController {
             await servicioModel.updateServicio(servicioData);
             res.json({ message: 'Servicio actualizado exitosamente' });
         } catch (error) {
-            console.error('Error al actualizar servicio:', error);
+            logger.error('Error al actualizar servicio:', error);
             res.status(500).json({ message: 'Error al actualizar servicio' });
         }
     }
@@ -41,7 +41,7 @@ class ServicioController {
             await servicioModel.deleteServicio(idServicio);
             res.json({ message: 'Servicio eliminado exitosamente' });
         } catch (error) {
-            console.error('Error al eliminar servicio:', error);
+            logger.error('Error al eliminar servicio:', error);
             res.status(500).json({ message: 'Error al eliminar servicio' });
         }
     }
@@ -57,7 +57,7 @@ class ServicioController {
             const servicios = await servicioModel.getServiciosPorAbogado(idAbogado);
             res.json(servicios);
         } catch (error) {
-            console.error('Error al obtener servicios por abogado:', error);
+            logger.error('Error al obtener servicios por abogado:', error);
             res.status(500).json({ message: 'Error al obtener servicios por abogado' });
         }
     }

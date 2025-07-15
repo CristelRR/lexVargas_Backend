@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_cron_1 = __importDefault(require("node-cron"));
 const db_1 = require("../config/db");
+const logger_1 = __importDefault(require("../logger/logger")); // Ruta ajustada a tu estructura
 node_cron_1.default.schedule('09 19 * * *', () => __awaiter(void 0, void 0, void 0, function* () {
     const pool = yield (0, db_1.connectDB)();
     const transaction = pool.transaction();
@@ -102,10 +103,10 @@ node_cron_1.default.schedule('09 19 * * *', () => __awaiter(void 0, void 0, void
     catch (error) {
         yield transaction.rollback();
         if (error instanceof Error) {
-            console.error('Error durante cronjob. Se revirtió la transacción:', error.message);
+            logger_1.default.error('Error durante cronjob. Se revirtió la transacción:', error.message);
         }
         else {
-            console.error('Error desconocido durante cronjob. Se revirtió la transacción:', error);
+            logger_1.default.error('Error desconocido durante cronjob. Se revirtió la transacción:', error);
         }
     }
 }));

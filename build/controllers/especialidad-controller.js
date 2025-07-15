@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.especialidadController = void 0;
 const especialidad_model_1 = __importDefault(require("../models/especialidad-model"));
+const logger_1 = __importDefault(require("../logger/logger"));
 class EspecialidadController {
     getEspecialidades(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -22,7 +23,7 @@ class EspecialidadController {
                 res.json(especialidades);
             }
             catch (error) {
-                console.error('Error al obtener especialidades:', error);
+                logger_1.default.error('Error al obtener especialidades:', error);
                 res.status(500).json({ message: 'Error al obtener especialidades' });
             }
         });
@@ -35,7 +36,7 @@ class EspecialidadController {
                 res.status(201).json({ message: 'Especialidad creada exitosamente' });
             }
             catch (error) {
-                console.error('Error al crear especialidad:', error);
+                logger_1.default.error('Error al crear especialidad:', error);
                 res.status(500).json({ message: 'Error al crear especialidad' });
             }
         });
@@ -48,7 +49,7 @@ class EspecialidadController {
                 res.json({ message: 'Especialidad actualizada exitosamente' });
             }
             catch (error) {
-                console.error('Error al actualizar especialidad:', error);
+                logger_1.default.error('Error al actualizar especialidad:', error);
                 res.status(500).json({ message: 'Error al actualizar especialidad' });
             }
         });
@@ -61,7 +62,7 @@ class EspecialidadController {
                 res.json({ message: 'Especialidad eliminada exitosamente' });
             }
             catch (error) {
-                console.error('Error al eliminar especialidad:', error);
+                logger_1.default.error('Error al eliminar especialidad:', error);
                 res.status(500).json({ message: 'Error al eliminar especialidad' });
             }
         });

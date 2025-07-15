@@ -9,7 +9,7 @@ class ExpedienteNController {
             const expedientes = await expedienteNModel.getExpedientes();
             res.json(expedientes);
         } catch (error) {
-            console.error('Error al obtener expedientes:', error);
+            logger.error('Error al obtener expedientes:', error);
             res.status(500).json({ message: 'Error al obtener expedientes' });
         }
     }
@@ -20,7 +20,7 @@ class ExpedienteNController {
             await expedienteNModel.crearExpediente(expedienteData);
             res.status(201).json({ message: 'Expediente creada exitosamente' });
         } catch (error) {
-            console.error('Error al crear expediente:', error);
+            logger.error('Error al crear expediente:', error);
             res.status(500).json({ message: 'Error al crear expediente' });
         }
     }
@@ -31,7 +31,7 @@ class ExpedienteNController {
             await expedienteNModel.updateExpediente(expedienteData);
             res.json({ message: 'Expediente actualizada exitosamente' });
         } catch (error) {
-            console.error('Error al actualizar expediente:', error);
+            logger.error('Error al actualizar expediente:', error);
             res.status(500).json({ message: 'Error al actualizar expediente' });
         }
     }
@@ -42,7 +42,7 @@ class ExpedienteNController {
             await expedienteNModel.deleteExpediente(idExpediente);
             res.json({ message: 'Expediente eliminada exitosamente' });
         } catch (error) {
-            console.error('Error al eliminar expediente:', error);
+            logger.error('Error al eliminar expediente:', error);
             res.status(500).json({ message: 'Error al eliminar expediente' });
         }
     }
@@ -57,7 +57,7 @@ class ExpedienteNController {
             }
             res.json(expediente);
         } catch (error) {
-            console.error('Error al obtener expediente:', error);
+            logger.error('Error al obtener expediente:', error);
             res.status(500).json({ message: 'Error al obtener expediente' });
         }
     }
@@ -79,7 +79,7 @@ class ExpedienteNController {
 
             res.json(expediente); // Enviar el expediente como respuesta
         } catch (error) {
-            console.error("Error al obtener la información general del expediente:", error);
+            logger.error("Error al obtener la información general del expediente:", error);
             res.status(500).json({ message: "Error al obtener la información general del expediente" });
         }
     }
@@ -107,7 +107,7 @@ class ExpedienteNController {
     
         res.json(response);
       } catch (error) {
-        console.error('Error al obtener las partes del expediente:', error);
+        logger.error('Error al obtener las partes del expediente:', error);
         res.status(500).json({ message: 'Error interno del servidor.' });
       }
     }
@@ -141,7 +141,7 @@ class ExpedienteNController {
             parte: result 
           });
         } catch (error) {
-          console.error('Error al agregar parte:', error);
+          logger.error('Error al agregar parte:', error);
           res.status(500).json({ message: 'Error interno del servidor.' });
         }
       }

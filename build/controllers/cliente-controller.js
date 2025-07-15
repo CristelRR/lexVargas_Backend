@@ -25,6 +25,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.clienteController = void 0;
 const cliente_model_1 = __importDefault(require("../models/cliente-model")); // Asegúrate de tener el modelo correspondiente
+const logger_1 = __importDefault(require("../logger/logger"));
 class ClienteController {
     constructor() {
         this.getClienteById = (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -40,7 +41,7 @@ class ClienteController {
                 res.status(200).json(cliente[0]);
             }
             catch (error) {
-                console.error('Error al obtener cliente por ID:', error);
+                logger_1.default.error('Error al obtener cliente por ID:', error);
                 res.status(500).json({ message: 'Error al obtener cliente' });
             }
         });
@@ -52,7 +53,7 @@ class ClienteController {
                 res.json(clientes);
             }
             catch (error) {
-                console.error('Error al obtener clientes:', error);
+                logger_1.default.error('Error al obtener clientes:', error);
                 res.status(500).json({ message: 'Error al obtener clientes' });
             }
         });
@@ -77,7 +78,7 @@ class ClienteController {
                 res.status(201).json(clienteCreado);
             }
             catch (error) {
-                console.error('Error al crear cliente:', error);
+                logger_1.default.error('Error al crear cliente:', error);
                 res.status(500).json({ message: 'Error al crear cliente' });
             }
         });
@@ -94,7 +95,7 @@ class ClienteController {
                 res.json({ message: 'Cliente actualizado exitosamente' });
             }
             catch (error) {
-                console.error('Error al actualizar cliente:', error);
+                logger_1.default.error('Error al actualizar cliente:', error);
                 res.status(500).json({ message: 'Error al actualizar cliente' });
             }
         });
@@ -110,7 +111,7 @@ class ClienteController {
                 res.json({ message: 'Cliente eliminado exitosamente' });
             }
             catch (error) {
-                console.error('Error al eliminar cliente:', error);
+                logger_1.default.error('Error al eliminar cliente:', error);
                 res.status(500).json({ message: 'Error al eliminar cliente' });
             }
         });

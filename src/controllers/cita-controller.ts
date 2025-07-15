@@ -11,7 +11,7 @@ class CitaController {
             const citas = await citaModel.getCitas();
             res.json(citas);
         } catch (error) {
-            console.error('Error al obtener citas:', error);
+            logger.error('Error al obtener citas:', error);
             res.status(500).json({ message: 'Error al obtener citas' });
         }
     }
@@ -22,7 +22,7 @@ class CitaController {
             await citaModel.crearCita(citaData);
             res.status(201).json({ message: 'Cita creada exitosamente' });
         } catch (error) {
-            console.error('Error al crear cita:', error);
+            logger.error('Error al crear cita:', error);
             res.status(500).json({ message: 'Error al crear cita' });
         }
     }
@@ -33,7 +33,7 @@ class CitaController {
             await citaModel.updateCita(citaData);
             res.json({ message: 'Cita actualizada exitosamente' });
         } catch (error) {
-            console.error('Error al actualizar cita:', error);
+            logger.error('Error al actualizar cita:', error);
             res.status(500).json({ message: 'Error al actualizar cita' });
         }
     }
@@ -44,7 +44,7 @@ class CitaController {
             await citaModel.deleteCita(idCita);
             res.json({ message: 'Cita eliminada exitosamente' });
         } catch (error) {
-            console.error('Error al eliminar cita:', error);
+            logger.error('Error al eliminar cita:', error);
             res.status(500).json({ message: 'Error al eliminar cita' });
         }
     }
@@ -55,7 +55,7 @@ class CitaController {
             const abogados = await citaModel.getAbogadosPorServicio(Number(idServicio));
             res.json(abogados);
         } catch (error) {
-            console.error('Error al obtener abogados:', error);
+            logger.error('Error al obtener abogados:', error);
             res.status(500).json({ message: 'Error al obtener abogados' });
         }
     }
@@ -66,7 +66,7 @@ class CitaController {
             const horarios = await citaModel.getHorariosDisponiblesPorAbogado(Number(idAbogado));
             res.json(horarios);
         } catch (error) {
-            console.error('Error al obtener horarios disponibles:', error);
+            logger.error('Error al obtener horarios disponibles:', error);
             res.status(500).json({ message: 'Error al obtener horarios disponibles' });
         }
     }
@@ -114,12 +114,12 @@ class CitaController {
                     costoServicio
                 );
             } else {
-                console.error('No se encontró un correo electrónico válido para el cliente');
+                logger.error('No se encontró un correo electrónico válido para el cliente');
             }
     
             res.status(201).json({ message: result.message, notification: 'Correo de notificación enviado' });
         } catch (error: any) {
-            console.error('Error al crear cita con transacción:', error);
+            logger.error('Error al crear cita con transacción:', error);
             res.status(500).json({ message: 'Error al crear cita con transacción', error: error.message });
         }
     }
@@ -173,21 +173,21 @@ class CitaController {
                             // Enviar correo de notificación
                             await enviarCorreo(emailCliente, asunto, contenido);
                         } else {
-                            console.error('Error: La fecha de la cita no es válida.');
+                            logger.error('Error: La fecha de la cita no es válida.');
                         }
                     } else {
-                        console.error('Error: No se encontró la fecha de la cita.');
+                        logger.error('Error: No se encontró la fecha de la cita.');
                     }
                 } else {
-                    console.error('No se encontró un correo electrónico válido para el cliente.');
+                    logger.error('No se encontró un correo electrónico válido para el cliente.');
                 }
             } else {
-                console.error('No se encontró información de la cita.');
+                logger.error('No se encontró información de la cita.');
             }
 
             res.json(result); // Responde con el resultado de la operación
         } catch (error) {
-            console.error('Error al cancelar la cita:', error);
+            logger.error('Error al cancelar la cita:', error);
             res.status(500).json({ message: 'Error al cancelar la cita' });
         }
     }
@@ -204,7 +204,7 @@ class CitaController {
           await citaModel.completarCita(Number(idCita));
           res.json({ message: 'Cita completada exitosamente' });
         } catch (error) {
-          console.error('Error al completar la cita:', error);
+          logger.error('Error al completar la cita:', error);
           res.status(500).json({ message: 'Error al completar la cita' });
         }
       }
@@ -217,7 +217,7 @@ class CitaController {
             const citas = await citaModel.getCitasByCliente(Number(idCliente));
             res.json(citas);
         } catch (error) {
-            console.error('Error al obtener citas del cliente:', error);
+            logger.error('Error al obtener citas del cliente:', error);
             res.status(500).json({ message: 'Error al obtener citas del cliente' });
         }
     }
@@ -229,7 +229,7 @@ class CitaController {
             const citas = await citaModel.getCitasByAbogado(Number(idAbogado));  // Llama al modelo con el idAbogado
             res.json(citas);  // Devuelve las citas como respuesta
         } catch (error) {
-            console.error('Error al obtener citas del abogado:', error);
+            logger.error('Error al obtener citas del abogado:', error);
             res.status(500).json({ message: 'Error al obtener citas del abogado' });
         }
     }
@@ -241,7 +241,7 @@ class CitaController {
             const citas = await citaModel.getAllCitas();  // Asegúrate de que el método esté implementado en el modelo
             res.json(citas);  // Devuelve las citas como respuesta
         } catch (error) {
-            console.error('Error al obtener las citas:', error);
+            logger.error('Error al obtener las citas:', error);
             res.status(500).json({ message: 'Error al obtener las citas' });
         }
     }
@@ -254,7 +254,7 @@ class CitaController {
             const clientes = await citaModel.getClientesPorAbogado(Number(idAbogado));  // Llama al modelo para obtener clientes únicos
             res.json(clientes);  // Envía los clientes como respuesta en formato JSON
         } catch (error) {
-            console.error('Error al obtener clientes del abogado:', error);
+            logger.error('Error al obtener clientes del abogado:', error);
             res.status(500).json({ message: 'Error al obtener clientes del abogado' });
         }
     }
@@ -267,7 +267,7 @@ class CitaController {
             const servicios = await citaModel.getServiciosPorCitasDeCliente(Number(idCliente));
             res.json(servicios);
         } catch (error) {
-            console.error('Error al obtener servicios asociados a las citas del cliente:', error);
+            logger.error('Error al obtener servicios asociados a las citas del cliente:', error);
             res.status(500).json({ message: 'Error al obtener servicios asociados a las citas del cliente' });
         }
     }
@@ -278,7 +278,7 @@ class CitaController {
             const citas = await citaModel.getAllCitas();
             res.json(citas);
         } catch (error) {
-            console.error('Error al obtener todas las citas:', error);
+            logger.error('Error al obtener todas las citas:', error);
             res.status(500).json({ message: 'Error al obtener todas las citas' });
         }
     }
@@ -294,7 +294,7 @@ class CitaController {
             const citas = await citaModel.getCitasCompletadasByExpediente(idExpediente);
             res.json(citas); // Responder con las citas completadas
         } catch (error) {
-            console.error('Error al obtener citas completadas por expediente:', error);
+            logger.error('Error al obtener citas completadas por expediente:', error);
             res.status(500).json({ message: 'Error al obtener citas completadas por expediente' });
         }
     }    

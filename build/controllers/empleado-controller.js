@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.empleadoController = void 0;
 const empleado_model_1 = __importDefault(require("../models/empleado-model"));
+const logger_1 = __importDefault(require("../logger/logger"));
 class EmpleadoController {
     constructor() {
         this.getEmpleadoById = (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -29,7 +30,7 @@ class EmpleadoController {
                 res.status(200).json(empleado);
             }
             catch (error) {
-                console.error('Error al obtener empleado por ID:', error);
+                logger_1.default.error('Error al obtener empleado por ID:', error);
                 res.status(500).json({ message: 'Error al obtener empleado' });
             }
         });
@@ -41,7 +42,7 @@ class EmpleadoController {
                 res.json(empleados);
             }
             catch (error) {
-                console.error('Error al obtener empleados:', error);
+                logger_1.default.error('Error al obtener empleados:', error);
                 res.status(500).json({ message: 'Error al obtener empleados' });
             }
         });
@@ -53,7 +54,7 @@ class EmpleadoController {
                 res.json(empleados);
             }
             catch (error) {
-                console.error('Error al obtener abogados:', error);
+                logger_1.default.error('Error al obtener abogados:', error);
                 res.status(500).json({ message: 'Error al obtener abogados' });
             }
         });
@@ -66,7 +67,7 @@ class EmpleadoController {
                 res.status(201).json({ message: 'Empleado creado exitosamente' });
             }
             catch (error) {
-                console.error('Error al crear empleado:', error);
+                logger_1.default.error('Error al crear empleado:', error);
                 res.status(500).json({ message: 'Error al crear empleado' });
             }
         });
@@ -83,7 +84,7 @@ class EmpleadoController {
                 res.json({ message: 'Empleado actualizado exitosamente' });
             }
             catch (error) {
-                console.error('Error al actualizar empleado:', error);
+                logger_1.default.error('Error al actualizar empleado:', error);
                 res.status(500).json({ message: 'Error al actualizar empleado' });
             }
         });
@@ -96,7 +97,7 @@ class EmpleadoController {
                 res.json({ message: 'Empleado eliminado exitosamente' });
             }
             catch (error) {
-                console.error('Error al eliminar empleado:', error);
+                logger_1.default.error('Error al eliminar empleado:', error);
                 res.status(500).json({ message: 'Error al eliminar empleado' });
             }
         });

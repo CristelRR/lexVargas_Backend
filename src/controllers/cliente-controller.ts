@@ -9,7 +9,7 @@ class ClienteController {
             const clientes = await clienteModel.getClientes();
             res.json(clientes);
         } catch (error) {
-            console.error('Error al obtener clientes:', error);
+            logger.error('Error al obtener clientes:', error);
             res.status(500).json({ message: 'Error al obtener clientes' });
         }
     }
@@ -36,7 +36,7 @@ class ClienteController {
           // Devolver cliente creado
           res.status(201).json(clienteCreado);
         } catch (error) {
-          console.error('Error al crear cliente:', error);
+          logger.error('Error al crear cliente:', error);
           res.status(500).json({ message: 'Error al crear cliente' });
         }
       }
@@ -53,7 +53,7 @@ class ClienteController {
             await clienteModel.updateCliente(idCliente, clienteData); // Llama al método de actualización en el modelo
             res.json({ message: 'Cliente actualizado exitosamente' });
         } catch (error) {
-            console.error('Error al actualizar cliente:', error);
+            logger.error('Error al actualizar cliente:', error);
             res.status(500).json({ message: 'Error al actualizar cliente' });
         }
     }
@@ -68,7 +68,7 @@ class ClienteController {
           await clienteModel.deleteCliente(idCliente);
           res.json({ message: 'Cliente eliminado exitosamente' });
         } catch (error) {
-          console.error('Error al eliminar cliente:', error);
+          logger.error('Error al eliminar cliente:', error);
           res.status(500).json({ message: 'Error al eliminar cliente' });
         }
       }
@@ -86,7 +86,7 @@ class ClienteController {
             }
             res.status(200).json(cliente[0]); 
         } catch (error) {
-            console.error('Error al obtener cliente por ID:', error);
+            logger.error('Error al obtener cliente por ID:', error);
             res.status(500).json({ message: 'Error al obtener cliente' });
         }
     }

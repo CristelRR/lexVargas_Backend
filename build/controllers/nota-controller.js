@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.notaController = void 0;
 const nota_modal_1 = __importDefault(require("../models/nota-modal"));
+const logger_1 = __importDefault(require("../logger/logger"));
 class NotaController {
     /**
      * Obtener todas las notas
@@ -25,7 +26,7 @@ class NotaController {
                 res.json(notas);
             }
             catch (error) {
-                console.error('Error al obtener notas:', error);
+                logger_1.default.error('Error al obtener notas:', error);
                 res.status(500).json({ message: 'Error al obtener notas' });
             }
         });
@@ -44,7 +45,7 @@ class NotaController {
                 res.json(notas);
             }
             catch (error) {
-                console.error('Error al obtener notas:', error);
+                logger_1.default.error('Error al obtener notas:', error);
                 res.status(500).json({ message: 'Error al obtener notas' });
             }
         });
@@ -73,7 +74,7 @@ class NotaController {
                 res.status(201).json({ message: 'Nota creada exitosamente' });
             }
             catch (error) {
-                console.error('Error al crear nota:', error);
+                logger_1.default.error('Error al crear nota:', error);
                 res.status(500).json({ message: 'Error al crear nota' });
             }
         });
@@ -92,7 +93,7 @@ class NotaController {
                 res.json({ message: 'Nota actualizada exitosamente' });
             }
             catch (error) {
-                console.error('Error al actualizar nota:', error);
+                logger_1.default.error('Error al actualizar nota:', error);
                 res.status(500).json({ message: 'Error al actualizar nota' });
             }
         });
@@ -111,7 +112,7 @@ class NotaController {
                 res.json({ message: 'Nota eliminada exitosamente' });
             }
             catch (error) {
-                console.error('Error al eliminar nota:', error);
+                logger_1.default.error('Error al eliminar nota:', error);
                 res.status(500).json({ message: 'Error al eliminar nota' });
             }
         });
@@ -133,7 +134,7 @@ class NotaController {
                 res.json(nota[0]);
             }
             catch (error) {
-                console.error('Error al obtener la nota:', error);
+                logger_1.default.error('Error al obtener la nota:', error);
                 res.status(500).json({ message: 'Error al obtener la nota' });
             }
         });
@@ -155,7 +156,7 @@ class NotaController {
                 res.json(notas);
             }
             catch (error) {
-                console.error('Error al obtener notas por cita:', error);
+                logger_1.default.error('Error al obtener notas por cita:', error);
                 res.status(500).json({ message: 'Error al obtener notas por cita' });
             }
         });

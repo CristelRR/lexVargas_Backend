@@ -388,7 +388,7 @@ class CitaModel {
             return { message: 'Cita cancelada y agenda actualizada correctamente' };
         } catch (error:any) {
             await transaction.rollback();
-            console.error('Error en la cancelación de la cita:', error);
+            logger.error('Error en la cancelación de la cita:', error);
             throw new Error('Error en la cancelación de la cita: ' + error.message);
         }
     }
@@ -411,7 +411,7 @@ class CitaModel {
     
             return { message: 'Estado de la cita actualizado a completada' };
         } catch (error: any) {
-            console.error('Error al actualizar la cita:', error);
+            logger.error('Error al actualizar la cita:', error);
             throw new Error('Error al actualizar el estado de la cita: ' + error.message);
         }
     }

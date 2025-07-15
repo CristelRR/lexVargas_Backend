@@ -18,6 +18,7 @@ const { PDFDocument } = require('pdf-lib'); // Librería para manipular PDFs
 const sql = require('mssql'); // Librería para conectarse a SQL Server
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
+const logger_1 = __importDefault(require("../logger/logger"));
 const uploadDir = path_1.default.join(__dirname, '../uploads');
 if (!fs_1.default.existsSync(uploadDir)) {
     fs_1.default.mkdirSync(uploadDir, { recursive: true });
@@ -87,7 +88,7 @@ class ExpedienteController {
             }
             catch (error) {
                 const err = error;
-                console.error('Error en actualizarProximaAudiencia:', err);
+                logger_1.default.error('Error en actualizarProximaAudiencia:', err);
                 if (err.message.includes('Invalid column name')) {
                     res.status(500).json({
                         success: false,
@@ -174,7 +175,7 @@ class ExpedienteController {
             }
             catch (error) {
                 const err = error;
-                console.error('Error en programarAudiencia:', err);
+                logger_1.default.error('Error en programarAudiencia:', err);
                 res.status(500).json({
                     success: false,
                     message: 'Error al programar la audiencia',
@@ -218,7 +219,7 @@ class ExpedienteController {
             }
             catch (error) {
                 const err = error;
-                console.error('Error al obtener audiencia desde expediente:', err);
+                logger_1.default.error('Error al obtener audiencia desde expediente:', err);
                 res.status(500).json({
                     success: false,
                     error: 'Error al obtener la audiencia desde tblExpediente',
@@ -282,7 +283,7 @@ class ExpedienteController {
                 });
             }
             catch (error) {
-                console.error('Error al obtener el expediente completo:', error);
+                logger_1.default.error('Error al obtener el expediente completo:', error);
                 res.status(500).json({ error: 'Error al obtener el expediente' });
             }
         });
@@ -317,7 +318,7 @@ class ExpedienteController {
                 });
             }
             catch (error) {
-                console.error('Error al obtener el documento:', error);
+                logger_1.default.error('Error al obtener el documento:', error);
                 res.status(500).json({ error: 'Error al obtener el documento' });
             }
         });
@@ -426,7 +427,7 @@ class ExpedienteController {
                 res.status(200).json(expedientes);
             }
             catch (error) {
-                console.error('Error al obtener los expedientes:', error);
+                logger_1.default.error('Error al obtener los expedientes:', error);
                 res.status(500).json({ error: 'Error al obtener los expedientes' });
             }
         });
@@ -464,7 +465,7 @@ class ExpedienteController {
                 res.status(200).json({ message: 'Documentos subidos exitosamente.' });
             }
             catch (error) {
-                console.error('Error al subir documentos:', error);
+                logger_1.default.error('Error al subir documentos:', error);
                 res.status(500).json({ error: 'Hubo un error al procesar los documentos.' });
             }
         });
@@ -536,18 +537,18 @@ class ExpedienteController {
                     return res.status(200).json({ message: 'Expediente creado correctamente', idExpediente });
                 }
                 catch (error) {
-                    console.error('Error al insertar expediente:', error);
+                    logger_1.default.error('Error al insertar expediente:', error);
                     yield transaction.rollback();
                     return res.status(500).json({ error: 'Error al insertar el expediente' });
                 }
             }
             catch (error) {
                 if (error instanceof Error) {
-                    console.error('Error al conectar a la base de datos:', error.message);
+                    logger_1.default.error('Error al conectar a la base de datos:', error.message);
                     return res.status(500).json({ error: 'Error al conectar a la base de datos', detalles: error.message });
                 }
                 else {
-                    console.error('Error inesperado:', error);
+                    logger_1.default.error('Error inesperado:', error);
                     return res.status(500).json({ error: 'Error inesperado al conectar a la base de datos' });
                 }
             }
@@ -578,7 +579,7 @@ class ExpedienteController {
                 res.status(200).json(result.recordset);
             }
             catch (error) {
-                console.error('Error al obtener el expediente:', error);
+                logger_1.default.error('Error al obtener el expediente:', error);
                 res.status(500).json({ error: 'Error al obtener el expediente' });
             }
         });
@@ -678,12 +679,12 @@ class ExpedienteController {
                 }
                 catch (innerError) {
                     yield transaction.rollback();
-                    console.error('Error durante la transacción:', innerError);
+                    logger_1.default.error('Error durante la transacción:', innerError);
                     res.status(500).json({ error: 'Error al mover el expediente al historial' });
                 }
             }
             catch (error) {
-                console.error('Error al eliminar el expediente:', error);
+                logger_1.default.error('Error al eliminar el expediente:', error);
                 res.status(500).json({ error: 'Error al eliminar el expediente' });
             }
         });
@@ -753,7 +754,7 @@ class ExpedienteController {
                 res.status(200).json(expedientes);
             })
                 .catch(error => {
-                console.error('Error al obtener el historial de los expedientes:', error);
+                logger_1.default.error('Error al obtener el historial de los expedientes:', error);
                 res.status(500).json({ error: 'Error al obtener el historial de los expedientes' });
             });
         });
@@ -794,7 +795,7 @@ class ExpedienteController {
                 res.status(200).json({ message: 'Expediente y documentos actualizados correctamente' });
             }
             catch (error) {
-                console.error('Error al actualizar el expediente:', error);
+                logger_1.default.error('Error al actualizar el expediente:', error);
                 res.status(500).json({ error: 'Error al actualizar el expediente' });
             }
         });
